@@ -66,6 +66,13 @@ define('WP_DEBUG', false);
 
 /* That's all, stop editing! Happy blogging. */
 
+/**
+ * FS_METHOD forces the filesystem method.
+ *
+ * direct is not auto-detected when the file owners are not apache.
+ */
+define('FS_METHOD', 'direct');
+
 /** Absolute path to the WordPress directory. */
 if ( !defined('ABSPATH') )
 	define('ABSPATH', dirname(__FILE__) . '/');
