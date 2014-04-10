@@ -12,8 +12,8 @@ find $DIR -name \*.sh -print0 | xargs -0 chmod 755
 chown root:root $DIR/permset.sh
 
 chmod 640 $DIR/wp-db-config.php
-chmod 02775 $DIR/wp-content/plugins
-chmod 02775 $DIR/wp-content/themes
-chmod 02775 $DIR/wp-content/upgrade
+
+find $DIR/wp-content -type d -print0 | xargs -0 chmod 02775
+find $DIR/wp-content -type f -print0 | xargs -0 chmod 644
 
 restorecon -R $DIR
