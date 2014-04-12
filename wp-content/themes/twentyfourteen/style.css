@@ -860,7 +860,8 @@ span + .edit-link:before,
 .site-title {
 	float: left;
 	font-size: 18px;
-	font-weight: 700;
+	font-weight: 300;
+  font-family: Lato, "新ゴ EL JIS2004", "Shin Go ExLight JIS2004", sans-serif;
 	line-height: 48px;
 	margin: 0;
 
@@ -1143,6 +1144,11 @@ a.post-thumbnail:hover {
 
 .entry-meta a {
 	color: #767676;
+}
+
+/* Need to exclude #content-sidebar .entry-title */
+#content .entry-title {
+  font-family: Lato, "新ゴ EL JIS2004", "Shin Go ExLight JIS2004", sans-serif;
 }
 
 .entry-meta a:hover {
