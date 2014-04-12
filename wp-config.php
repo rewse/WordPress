@@ -1,4 +1,6 @@
 <?php
+define('WP_CACHE', true); //Added by WP-Cache Manager
+define( 'WPCACHEHOME', '/srv/www/wpdev/wp-content/plugins/wp-super-cache/' ); //Added by WP-Cache Manager
 /**
  * The base configurations of the WordPress.
  *
