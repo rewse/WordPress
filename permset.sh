@@ -4,7 +4,7 @@ DIR=/srv/www/wpdev
 
 chown -R tats:apache $DIR
 
-chmod 02755 $DIR
+chmod 02775 $DIR
 find $DIR -type d -print0 | xargs -0 chmod 02755
 find $DIR -type f -print0 | xargs -0 chmod 644
 find $DIR -name \*.sh -print0 | xargs -0 chmod 755
