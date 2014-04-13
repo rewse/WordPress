@@ -228,7 +228,7 @@ class Twenty_Fourteen_Ephemera_Widget extends WP_Widget {
 					<header class="entry-header">
 						<div class="entry-meta">
 							<?php
-								if ( ! has_post_format( 'link' ) ) :
+                if ( ! has_post_format( 'link' ) && ! has_post_format( 'aside' )) :
 									the_title( '<h1 class="entry-title"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></h1>' );
 								endif;
 
