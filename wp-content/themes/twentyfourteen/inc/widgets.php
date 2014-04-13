@@ -50,7 +50,7 @@ class Twenty_Fourteen_Ephemera_Widget extends WP_Widget {
 		 * @todo http://core.trac.wordpress.org/ticket/23257: Add plural versions of Post Format strings
 		 */
 		$this->format_strings = array(
-			'standard' => __( 'Standards', 'twentyfourteen' ),
+			'standard' => __( 'Posts',    'twentyfourteen' ),
 			'aside'   => __( 'Asides',    'twentyfourteen' ),
 			'image'   => __( 'Images',    'twentyfourteen' ),
 			'video'   => __( 'Videos',    'twentyfourteen' ),
