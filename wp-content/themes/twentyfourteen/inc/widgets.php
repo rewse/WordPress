@@ -75,8 +75,8 @@ class Twenty_Fourteen_Ephemera_Widget extends WP_Widget {
 				$format_string_more = __( 'More galleries', 'twentyfourteen' );
 				break;
 			case 'standard':
-				$format_string      = __( 'Standards', 'twentyfourteen' );
-				$format_string_more = __( 'More standards', 'twentyfourteen' );
+				$format_string      = __( 'Posts', 'twentyfourteen' );
+				$format_string_more = __( 'More posts', 'twentyfourteen' );
 				break;
 			case 'aside':
 			default:
