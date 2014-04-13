@@ -2819,6 +2819,11 @@ a.post-thumbnail:hover {
   display: none;
 }
 
+.content-sidebar .widget_twentyfourteen_ephemera .standard.widget-title:before {
+  content: "\f100";
+}
+
+
 /**
  * 8.0 Footer
  * -----------------------------------------------------------------------------
