@@ -21,7 +21,7 @@ class Twenty_Fourteen_Ephemera_Widget extends WP_Widget {
 	 *
 	 * @var array
 	 */
-	private $formats = array( 'aside', 'image', 'video', 'audio', 'quote', 'link', 'gallery' );
+	private $formats = array( 'standard', 'aside', 'image', 'video', 'audio', 'quote', 'link', 'gallery' );
 
 	/**
 	 * Pluralized post format strings.
@@ -43,13 +43,14 @@ class Twenty_Fourteen_Ephemera_Widget extends WP_Widget {
 	public function __construct() {
 		parent::__construct( 'widget_twentyfourteen_ephemera', __( 'Twenty Fourteen Ephemera', 'twentyfourteen' ), array(
 			'classname'   => 'widget_twentyfourteen_ephemera',
-			'description' => __( 'Use this widget to list your recent Aside, Quote, Video, Audio, Image, Gallery, and Link posts', 'twentyfourteen' ),
+			'description' => __( 'Use this widget to list your recent Standard, Aside, Quote, Video, Audio, Image, Gallery, and Link posts', 'twentyfourteen' ),
 		) );
 
 		/*
 		 * @todo http://core.trac.wordpress.org/ticket/23257: Add plural versions of Post Format strings
 		 */
 		$this->format_strings = array(
+			'standard' => __( 'Standards', 'twentyfourteen' ),
 			'aside'   => __( 'Asides',    'twentyfourteen' ),
 			'image'   => __( 'Images',    'twentyfourteen' ),
 			'video'   => __( 'Videos',    'twentyfourteen' ),
@@ -75,21 +76,42 @@ class Twenty_Fourteen_Ephemera_Widget extends WP_Widget {
 		$number = empty( $instance['number'] ) ? 2 : absint( $instance['number'] );
 		$title  = apply_filters( 'widget_title', empty( $instance['title'] ) ? $this->format_strings[ $format ] : $instance['title'], $instance, $this->id_base );
 
-		$ephemera = new WP_Query( array(
-			'order'          => 'DESC',
-			'posts_per_page' => $number,
-			'no_found_rows'  => true,
-			'post_status'    => 'publish',
-			'post__not_in'   => get_option( 'sticky_posts' ),
-			'tax_query'      => array(
-				array(
-					'taxonomy' => 'post_format',
-					'terms'    => array( "post-format-$format" ),
-					'field'    => 'slug',
-					'operator' => 'IN',
-				),
-			),
-		) );
+    if ( $format != 'standard' ) {
+      $ephemera = new WP_Query( array(
+        'order'          => 'DESC',
+        'posts_per_page' => $number,
+        'no_found_rows'  => true,
+        'post_status'    => 'publish',
+        'post__not_in'   => get_option( 'sticky_posts' ),
+        'tax_query'      => array(
+          array(
+            'taxonomy' => 'post_format',
+            'terms'    => array( "post-format-$format" ),
+            'field'    => 'slug',
+            'operator' => 'IN',
+          ),
+        ),
+      ) );
+    } else {
+      $ephemera = new WP_Query( array(
+        'order'          => 'DESC',
+        'posts_per_page' => $number,
+        'no_found_rows'  => true,
+        'post_status'    => 'publish',
+        'post__not_in'   => get_option( 'sticky_posts' ),
+        'tax_query'      => array(
+          array(
+            'taxonomy' => 'post_format',
+            'terms'    => array(
+              "post-format-aside", "post-format-image", "post-format-video", "post-format-audio",
+              "post-format-quote", "post-format-link", "post-format-gallery"
+            ),
+            'field'    => 'slug',
+            'operator' => 'NOT IN',
+          ),
+        ),
+      ) );
+    }
 
 		if ( $ephemera->have_posts() ) :
 			$tmp_content_width = $GLOBALS['content_width'];
@@ -153,8 +175,34 @@ class Twenty_Fourteen_Ephemera_Widget extends WP_Widget {
 						</p>
 						<?php
 								endif;
+              elseif ( $format == 'standard' ) :
+                $images = array();
 
-							else :
+                $images = get_posts( array(
+                  'fields'         => 'ids',
+                  'numberposts'    => -1,
+                  'order'          => 'ASC',
+                  'orderby'        => 'menu_order',
+                  'post_mime_type' => 'image',
+                  'post_parent'    => get_the_ID(),
+                  'post_type'      => 'attachment',
+                ) );
+
+                $total_images = count( $images );
+
+                if ( has_post_thumbnail() ) :
+                  $post_thumbnail = get_the_post_thumbnail();
+                elseif ( $total_images > 0 ) :
+                  $image          = array_shift( $images );
+                  $post_thumbnail = wp_get_attachment_image( $image, 'post-thumbnail' );
+                endif;
+
+                if ( ! empty ( $post_thumbnail ) ) :
+            ?>
+            <p><a href="<?php the_permalink(); ?>"><?php echo $post_thumbnail; ?></a></p>
+            <?php
+                endif;
+              else:
 								the_content( __( 'Continue reading <span class="meta-nav">&rarr;</span>', 'twentyfourteen' ) );
 							endif;
 						?>
