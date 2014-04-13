@@ -2813,6 +2813,11 @@ a.post-thumbnail:hover {
 	font-weight: 900;
 }
 
+/* User */
+
+.content-sidebar .widget_twentyfourteen_ephemera .sharedaddy {
+  display: none;
+}
 
 /**
  * 8.0 Footer

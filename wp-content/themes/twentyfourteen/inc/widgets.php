@@ -219,6 +219,8 @@ class Twenty_Fourteen_Ephemera_Widget extends WP_Widget {
             <p><a href="<?php the_permalink(); ?>"><?php echo $post_thumbnail; ?></a></p>
             <?php
                 endif;
+
+                the_excerpt();
               else:
 								the_content( __( 'Continue reading <span class="meta-nav">&rarr;</span>', 'twentyfourteen' ) );
 							endif;
