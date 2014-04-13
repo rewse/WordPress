@@ -853,16 +853,16 @@ span + .edit-link:before,
 }
 
 .header-main {
-	min-height: 48px;
+  min-height: 63px; /* Same as .site-title line-height */
 	padding: 0 10px;
 }
 
 .site-title {
 	float: left;
-	font-size: 18px;
+  font-size: 33px; /* Same as #content .entry-title */
 	font-weight: 300;
   font-family: Lato, "新ゴ EL JIS2004", "Shin Go ExLight JIS2004", sans-serif;
-	line-height: 48px;
+  line-height: 63px; /* Add 30px to font-size */
 	margin: 0;
 
 	/* Nav-toggle width + search-toggle width - gutter = 86px */
@@ -885,10 +885,10 @@ span + .edit-link:before,
 	background-color: #24890d;
 	cursor: pointer;
 	float: right;
-	height: 48px;
+  height: 63px; /* Same as .site-title line-height */
 	margin-right: 38px;
 	text-align: center;
-	width: 48px;
+  width: 63px; /* Same as .site-title line-height */
 }
 
 .search-toggle:hover,
@@ -900,7 +900,7 @@ span + .edit-link:before,
 	color: #fff;
 	content: "\f400";
 	font-size: 20px;
-	margin-top: 14px;
+  margin-top: 21px; /* (63px - 20px) / 2 */
 }
 
 .search-toggle .screen-reader-text {
