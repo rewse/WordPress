@@ -113,7 +113,7 @@ body {
 }
 
 a {
-  color: #df0000;
+  color: #800000;
 	text-decoration: none;
 }
 
@@ -2597,7 +2597,7 @@ a.post-thumbnail:hover {
  */
 
 .content-sidebar .widget a {
-  color: #df0000;
+  color: #800000;
 }
 
 .content-sidebar .widget a:hover {
