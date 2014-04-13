@@ -1,4 +1,4 @@
-/**
+**
  * Theme functions file
  *
  * Contains handlers for navigation, accessibility, header sizing
@@ -70,7 +70,7 @@
 
 		/*
 		 * Fixed header for large screen.
-		 * If the header becomes more than 48px tall, unfix the header.
+		 * If the header becomes more than 63px tall, unfix the header.
 		 *
 		 * The callback on the scroll event is only added if there is a header
 		 * image and we are not on mobile.
@@ -79,7 +79,7 @@
 			var mastheadHeight = $( '#masthead' ).height(),
 				toolbarOffset, mastheadOffset;
 
-			if ( mastheadHeight > 48 ) {
+			if ( mastheadHeight > 63 ) {
 				body.removeClass( 'masthead-fixed' );
 			}
 
@@ -88,7 +88,7 @@
 				mastheadOffset = $( '#masthead' ).offset().top - toolbarOffset;
 
 				_window.on( 'scroll.twentyfourteen', function() {
-					if ( ( window.scrollY > mastheadOffset ) && ( mastheadHeight < 49 ) ) {
+					if ( ( window.scrollY > mastheadOffset ) && ( mastheadHeight < 64 ) ) {
 						body.addClass( 'masthead-fixed' );
 					} else {
 						body.removeClass( 'masthead-fixed' );
