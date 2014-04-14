@@ -798,9 +798,7 @@ div.wp-caption.alignright .wp-caption-text {
 .search-toggle:before,
 .slider-direction-nav a:before,
 .widget_twentyfourteen_ephemera .widget-title:before,
-.widget_top-posts .widget-title:before,
-.widget_twitter_timeline .widget-title:before,
-.content-sidebar aside:nth-last-of-type(1) .widget-title:before {
+.widget_top-posts .widget-title:before {
 	-webkit-font-smoothing: antialiased;
 	display: inline-block;
 	font: normal 16px/1 Genericons;
@@ -2820,17 +2818,13 @@ a.post-thumbnail:hover {
 /* Ephemera widget*/
 
 .content-sidebar .widget_twentyfourteen_ephemera .widget-title,
-.content-sidebar .widget_top-posts .widget-title,
-.content-sidebar .widget_twitter_timeline .widget-title,
-.content-sidebar aside:nth-last-of-type(1) .widget-title {
+.content-sidebar .widget_top-posts .widget-title {
 	line-height: 1.2857142857;
 	padding-top: 1px;
 }
 
 .content-sidebar .widget_twentyfourteen_ephemera .widget-title:before,
-.content-sidebar .widget_top-posts .widget-title:before,
-.content-sidebar .widget_twitter_timeline .widget-title:before,
-.content-sidebar aside:nth-last-of-type(1) .widget-title:before {
+.content-sidebar .widget_top-posts .widget-title:before {
   background-color: #5f6666;
 	color: #fff;
 	margin: -1px 9px 0 0;
@@ -2873,10 +2867,6 @@ a.post-thumbnail:hover {
 	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-.content-sidebar .widget_top-posts > ol > li:last-child {
-  border-bottom: 0;
-}
-
 .content-sidebar .widget_twentyfourteen_ephemera .entry-meta,
 .content-sidebar .widget_top-posts .entry-meta {
 	color: #ccc;
@@ -2916,14 +2906,6 @@ a.post-thumbnail:hover {
 
 .content-sidebar .widget_top-posts .widget-title:before {
   content: "\f408";
-}
-
-.content-sidebar .widget_twitter_timeline .widget-title:before {
-  content: "\f202";
-}
-
-.content-sidebar aside:nth-last-of-type(1) .widget-title:before {
-  content: "\f203";
 }
 
 
