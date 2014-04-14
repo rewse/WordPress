@@ -50,7 +50,7 @@ class Twenty_Fourteen_Ephemera_Widget extends WP_Widget {
 		 * @todo http://core.trac.wordpress.org/ticket/23257: Add plural versions of Post Format strings
 		 */
 		$this->format_strings = array(
-			'standard' => __( 'Posts',    'twentyfourteen' ),
+			'standard' => __( 'Standards', 'twentyfourteen' ),
 			'aside'   => __( 'Asides',    'twentyfourteen' ),
 			'image'   => __( 'Images',    'twentyfourteen' ),
 			'video'   => __( 'Videos',    'twentyfourteen' ),
@@ -120,7 +120,11 @@ class Twenty_Fourteen_Ephemera_Widget extends WP_Widget {
 			echo $args['before_widget'];
 			?>
 			<h1 class="widget-title <?php echo esc_attr( $format ); ?>">
-				<a class="entry-format" href="<?php echo esc_url( get_post_format_link( $format ) ); ?>"><?php echo $title; ?></a>
+      <?php if ( $format == 'standard' ) : ?>
+        <a class="entry-format" href="<?php bloginfo( 'url' ); ?>"><?php echo $title; ?></a>
+      <?php else : ?>
+        <a class="entry-format" href="<?php echo esc_url( get_post_format_link( $format ) ); ?>"><?php echo $title; ?></a>
+      <?php endif; ?>
 			</h1>
 			<ol>
 
@@ -236,8 +240,12 @@ class Twenty_Fourteen_Ephemera_Widget extends WP_Widget {
 				<?php endwhile; ?>
 
 			</ol>
-			<a class="post-format-archive-link" href="<?php echo esc_url( get_post_format_link( $format ) ); ?>"><?php printf( __( 'More %s <span class="meta-nav">&rarr;</span>', 'twentyfourteen' ), $this->format_strings[ $format ] ); ?></a>
-			<?php
+      <?php if ( $format == 'standard' ) : ?>
+        <a class="post-format-archive-link" href="<?php bloginfo( 'url' ); ?>"><?php printf( __( 'More %s <span class="meta-nav">&rarr;</span>', 'twentyfourteen' ), 'Posts' ); ?></a>
+      <?php else : ?>
+        <a class="post-format-archive-link" href="<?php echo esc_url( get_post_format_link( $format ) ); ?>"><?php printf( __( 'More %s <span class="meta-nav">&rarr;</span>', 'twentyfourteen' ), $this->format_strings[ $format ] ); ?></a>
+      <?php
+        endif;
 
 			echo $args['after_widget'];
 
