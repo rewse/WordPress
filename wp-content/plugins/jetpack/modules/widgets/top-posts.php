@@ -314,37 +314,19 @@ class Jetpack_Top_Posts_Widget extends WP_Widget {
 		switch ( $display ) {
 		case 'list' :
 		case 'grid' :
-			// Keep the avatar_size as default dimensions for backward compatibility.
-			$width  = (int) $get_image_options['avatar_size'];
-			$height = (int) $get_image_options['avatar_size'];
-
-			// Check if the user has changed the width.
-			if ( ! empty( $get_image_options['width'] ) ) {
-				$width  = (int) $get_image_options['width'];
-			}
-
-			// Check if the user has changed the height.
-			if ( ! empty( $get_image_options['height'] ) ) {
-				$height = (int) $get_image_options['height'];
-			}
-
-			foreach ( $posts as &$post ) {
-				$image = Jetpack_PostImages::get_image(
-					$post['post_id'],
-					array(
-						'fallback_to_avatars' => true,
-						'avatar_size'         => (int) $get_image_options['avatar_size'],
-					)
-				);
-				$post['image'] = $image['src'];
-				if ( 'blavatar' != $image['from'] && 'gravatar' != $image['from'] ) {
-					$post['image'] = jetpack_photon_url( $post['image'], array( 'resize' => "$width,$height" ) );
-				}
-			}
-
-			unset( $post );
-
 			if ( 'grid' == $display ) {
+        wp_enqueue_style( 'widget-grid-and-list' );
+        foreach ( $posts as &$post ) {
+          $image = Jetpack_PostImages::get_image( $post['post_id'], array( 'fallback_to_avatars' => true ) );
+          $post['image'] = $image['src'];
+          if ( 'blavatar' != $image['from'] && 'gravatar' != $image['from'] ) {
+            $size = (int) $get_image_options['avatar_size'];
+            $post['image'] = jetpack_photon_url( $post['image'], array( 'resize' => "$size,$size" ) );
+          }
+        }
+
+        unset( $post );
+
 				echo "<div class='widgets-grid-layout no-grav'>\n";
 				foreach ( $posts as $post ) :
 				?>
