@@ -132,7 +132,11 @@ class Twenty_Fourteen_Ephemera_Widget extends WP_Widget {
 			echo $args['before_widget'];
 			?>
 			<h1 class="widget-title <?php echo esc_attr( $format ); ?>">
-				<a class="entry-format" href="<?php echo esc_url( get_post_format_link( $format ) ); ?>"><?php echo esc_html( $title ); ?></a>
+      <?php if ( $format == 'standard' ) : ?>
+        <a class="entry-format" href="<?php bloginfo( 'url' ); ?>"><?php echo esc_html( $title ); ?></a>
+      <?php else : ?>
+        <a class="entry-format" href="<?php echo esc_url( get_post_format_link( $format ) ); ?>"><?php echo esc_html( $title ); ?></a>
+      <?php endif; ?>
 			</h1>
 			<ol>
 
@@ -253,14 +257,17 @@ class Twenty_Fourteen_Ephemera_Widget extends WP_Widget {
 				<?php endwhile; ?>
 
 			</ol>
-			<a class="post-format-archive-link" href="<?php echo esc_url( get_post_format_link( $format ) ); ?>">
-				<?php
-					/* translators: used with More archives link */
-					printf( __( '%s <span class="meta-nav">&rarr;</span>', 'twentyfourteen' ), $format_string_more );
-				?>
+      <?php if ( $format == 'standard' ) : ?>
+        <a class="post-format-archive-link" href="<?php bloginfo( 'url' ); ?>">
+      <?php else : ?>
+        <a class="post-format-archive-link" href="<?php echo esc_url( get_post_format_link( $format ) ); ?>">
+      <?php
+        endif;
+        /* translators: used with More archives link */
+        printf( __( '%s <span class="meta-nav">&rarr;</span>', 'twentyfourteen' ), $format_string_more );
+      ?>
 			</a>
 			<?php
-
 			echo $args['after_widget'];
 
 			// Reset the post globals as this query will have stomped on it.
