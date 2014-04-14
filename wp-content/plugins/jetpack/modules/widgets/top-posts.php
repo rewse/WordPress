@@ -171,19 +171,19 @@ class Jetpack_Top_Posts_Widget extends WP_Widget {
 		switch ( $display ) {
 		case 'list' :
 		case 'grid' :
-			wp_enqueue_style( 'widget-grid-and-list' );
-			foreach ( $posts as &$post ) {
-				$image = Jetpack_PostImages::get_image( $post['post_id'], array( 'fallback_to_avatars' => true ) );
-				$post['image'] = $image['src'];
-				if ( 'blavatar' != $image['from'] && 'gravatar' != $image['from'] ) {
-					$size = (int) $get_image_options['avatar_size'];
-					$post['image'] = jetpack_photon_url( $post['image'], array( 'resize' => "$size,$size" ) );
-				}
-			}
-
-			unset( $post );
-
 			if ( 'grid' == $display ) {
+        wp_enqueue_style( 'widget-grid-and-list' );
+        foreach ( $posts as &$post ) {
+          $image = Jetpack_PostImages::get_image( $post['post_id'], array( 'fallback_to_avatars' => true ) );
+          $post['image'] = $image['src'];
+          if ( 'blavatar' != $image['from'] && 'gravatar' != $image['from'] ) {
+            $size = (int) $get_image_options['avatar_size'];
+            $post['image'] = jetpack_photon_url( $post['image'], array( 'resize' => "$size,$size" ) );
+          }
+        }
+
+        unset( $post );
+
 				echo "<div class='widgets-grid-layout no-grav'>\n";
 				foreach ( $posts as $post ) :
 				?>
