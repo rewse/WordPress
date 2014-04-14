@@ -1183,8 +1183,7 @@ a.post-thumbnail:hover {
 	display: none;
 }
 
-.single .byline,
-.group-blog .byline {
+#content .byline {
 	display: inline;
 }
 
