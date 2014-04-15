@@ -31,9 +31,6 @@ get_header(); ?>
 						printf( __( 'All posts by %s', 'twentyfourteen' ), get_the_author() );
 					?>
 				</h1>
-				<?php if ( get_the_author_meta( 'description' ) ) : ?>
-				<div class="author-description"><?php the_author_meta( 'description' ); ?></div>
-				<?php endif; ?>
 			</header><!-- .archive-header -->
 
 			<?php
