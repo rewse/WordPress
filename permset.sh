@@ -11,6 +11,7 @@ find $DIR -name \*.sh -print0 | xargs -0 chmod 755
 
 chown root:root $DIR/permset.sh
 
+chmod 664 $DIR/.htaccess
 chmod 640 $DIR/wp-db-config.php
 
 find $DIR/wp-content -type d -print0 | xargs -0 chmod 02775
