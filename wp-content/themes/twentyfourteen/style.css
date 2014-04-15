@@ -1785,8 +1785,9 @@ a.post-thumbnail:hover {
 
 .archive-title,
 .page-title {
-	font-size: 16px;
-	font-weight: 900;
+  font-size: 33px; /* Same as #content .entry-title */
+  font-weight: 300;
+  font-family: Lato, "新ゴ EL JIS2004", "Shin Go ExLight JIS2004", sans-serif;
 	line-height: 1.5;
 	margin: 0;
 }
