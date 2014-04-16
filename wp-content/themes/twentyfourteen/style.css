@@ -2618,6 +2618,33 @@ a.post-thumbnail:hover {
 	margin-bottom: 0;
 }
 
+/* User */
+
+.widget_more_about .twitter:before {
+  content: '\f202\0020';
+  font: normal 12px/1 Genericons;
+}
+
+.widget_more_about .facebook:before {
+  content: '\f203\0020';
+  font: normal 12px/1 Genericons;
+}
+
+.widget_more_about .linkedin:before {
+  content: '\f208\0020';
+  font: normal 12px/1 Genericons;
+}
+
+.widget_more_about .github:before {
+  content: '\f200\0020';
+  font: normal 12px/1 Genericons;
+}
+
+.widget_more_about .yelp:before {
+  content: '\f442\0020';
+  font: normal 12px/1 Genericons;
+}
+
 
 /**
  * 7.2 Content Sidebar Widgets
