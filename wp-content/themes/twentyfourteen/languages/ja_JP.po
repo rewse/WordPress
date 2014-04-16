@@ -8,7 +8,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2014-04-15 01:13+0900\n"
+"PO-Revision-Date: 2014-04-17 00:56+0900\n"
 "Last-Translator: Tats Shibata <ts@rwese.jp>\n"
 
 #: 404.php:17
@@ -56,8 +56,8 @@ msgstr ""
 #: comments.php:27
 msgid "One thought on &ldquo;%2$s&rdquo;"
 msgid_plural "%1$s thoughts on &ldquo;%2$s&rdquo;"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "&ldquo;%2$s&rdquo; についての1件のコメント"
+msgstr[1] "&ldquo;%2$s&rdquo; についての%1$s件のコメント"
 
 #: comments.php:34 comments.php:52
 msgid "Comment navigation"
