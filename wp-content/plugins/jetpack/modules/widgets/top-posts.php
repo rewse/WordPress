@@ -282,8 +282,8 @@ class Jetpack_Top_Posts_Widget extends WP_Widget {
 				endforeach;
 				echo "</div>\n";
 			} else {
-				echo "<ol>\n";
-				foreach ( $posts as $post ) :
+        echo "<ol>\n";
+        foreach ( $posts as $post ) :
           $top_posts = new WP_Query( 'p=' . $post['post_id'] );
 
           if ( $top_posts->have_posts() ) : while ( $top_posts->have_posts() ) : $top_posts->the_post();
@@ -348,7 +348,7 @@ class Jetpack_Top_Posts_Widget extends WP_Widget {
               endif;
           endwhile; endif;
 				endforeach;
-				echo "</ul>\n";
+        echo "</ol>\n";
 			}
 			break;
 		default :
