@@ -103,19 +103,6 @@
 		} );
 	} );
 
-	// Arrange footer widgets vertically.
-	if ( $.isFunction( $.fn.masonry ) ) {
-		$( '#footer-sidebar' ).masonry( {
-			itemSelector: '.widget',
-			columnWidth: function( containerWidth ) {
-				return containerWidth / 4;
-			},
-			gutterWidth: 0,
-			isResizable: true,
-			isRTL: $( 'body' ).is( '.rtl' )
-		} );
-	}
-
 	// Initialize Featured Content slider.
 	_window.load( function() {
 		if ( body.is( '.slider' ) ) {
