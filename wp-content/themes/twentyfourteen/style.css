@@ -1195,7 +1195,7 @@ a.post-thumbnail:hover {
 /* Tag links style */
 
 .entry-meta .tag-links a {
-	background-color: #767676;
+  background-color: #ccc;
 	border-radius: 0 2px 2px 0;
 	color: #fff;
 	display: inline-block;
@@ -1215,7 +1215,7 @@ a.post-thumbnail:hover {
 
 .entry-meta .tag-links a:before {
 	border-top: 10px solid transparent;
-	border-right: 8px solid #767676;
+  border-right: 8px solid #ccc;
 	border-bottom: 10px solid transparent;
 	content: "";
 	height: 0;
