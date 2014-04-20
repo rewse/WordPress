@@ -3848,7 +3848,6 @@ a.post-thumbnail:hover {
 		clear: none;
 		float: left;
 		margin: 0 0 0 -100%;
-		min-height: 100vh;
 		width: 122px;
 	}
 
