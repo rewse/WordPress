@@ -856,7 +856,7 @@ span + .edit-link:before,
 
 .header-main {
   min-height: 63px; /* Same as .site-title line-height */
-	padding: 0 10px;
+  padding: 0 0 0 10px;
 }
 
 .site-title {
@@ -888,7 +888,7 @@ span + .edit-link:before,
 	cursor: pointer;
 	float: right;
   height: 63px; /* Same as .site-title line-height */
-	margin-right: 38px;
+  margin-right: 0;
 	text-align: center;
   width: 63px; /* Same as .site-title line-height */
 }
@@ -3386,11 +3386,11 @@ a.post-thumbnail:hover {
 
 @media screen and (min-width: 673px) {
 	.header-main {
-		padding: 0 30px;
+    padding: 0 0 0 30px;
 	}
 
 	.search-toggle {
-		margin-right: 18px;
+    margin-right: 0;
 	}
 
 	.search-box .search-field {
