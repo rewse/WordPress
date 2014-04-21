@@ -3348,6 +3348,12 @@ a.post-thumbnail:hover {
   .primary-sidebar .jetpack_subscription_widget #subscribe-field {
     width: 50%;
   }
+
+  .footer-sidebar #text-7,
+  .footer-sidebar .widget_categories,
+  .footer-sidebar .widget_tag_cloud {
+    display: none;
+  }
 }
 
 @media screen and (min-width: 594px) {
