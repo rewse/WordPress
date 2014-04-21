@@ -3339,6 +3339,11 @@ a.post-thumbnail:hover {
     border-top: 0;
     white-space: nowrap;
   }
+
+  .primary-sidebar .widget_rss_links p {
+    display: inline;
+    margin-right: 40px;
+  }
 }
 
 @media screen and (min-width: 594px) {
