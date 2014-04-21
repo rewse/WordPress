@@ -3344,6 +3344,10 @@ a.post-thumbnail:hover {
     display: inline;
     margin-right: 40px;
   }
+
+  .primary-sidebar .jetpack_subscription_widget #subscribe-field {
+    width: 50%;
+  }
 }
 
 @media screen and (min-width: 594px) {
