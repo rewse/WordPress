@@ -3332,6 +3332,13 @@ a.post-thumbnail:hover {
     margin-top: -21px;
     padding-left: 101px;
   }
+
+  .primary-sidebar .widget_categories li {
+    display: inline;
+    margin-right: 20px;
+    border-top: 0;
+    white-space: nowrap;
+  }
 }
 
 @media screen and (min-width: 594px) {
