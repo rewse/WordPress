@@ -2844,6 +2844,10 @@ a.post-thumbnail:hover {
 	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
+.content-sidebar .widget_top-posts > ol > li {
+  border-bottom: 0;
+}
+
 .content-sidebar .widget_twentyfourteen_ephemera .entry-meta,
 .content-sidebar .widget_top-posts .entry-meta {
 	color: #ccc;
