@@ -1288,13 +1288,6 @@ a.post-thumbnail:hover {
 	margin-top: 0;
 }
 
-.entry-content a,
-.entry-summary a,
-.page-content a,
-.comment-content a {
-	text-decoration: underline;
-}
-
 .entry-content a:hover,
 .entry-summary a:hover,
 .page-content a:hover,
