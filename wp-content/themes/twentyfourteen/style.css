@@ -3533,21 +3533,6 @@ a.post-thumbnail:hover img {
 		margin-right: 0;
 	}
 
-	/* Fixed Header */
-
-	.masthead-fixed .site-header {
-		position: fixed;
-		top: 0;
-	}
-
-	.admin-bar.masthead-fixed .site-header {
-		top: 32px;
-	}
-
-	.masthead-fixed .site-main {
-		margin-top: 48px;
-	}
-
 	/* Navigation */
 
 	.site-navigation li .current_page_item > a,
