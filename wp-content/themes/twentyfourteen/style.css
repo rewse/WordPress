@@ -1187,6 +1187,14 @@ a.post-thumbnail:hover {
 	margin-bottom: 8px;
 }
 
+.site-content .entry-meta .post-format,
+.site-content .entry-meta .entry-date,
+.site-content .entry-meta .byline,
+.site-content .entry-meta .comments-link,
+.site-content .entry-meta .edit-link {
+  white-space: nowrap;
+}
+
 .site-content footer.entry-meta {
 	margin: 24px auto 0;
 	padding: 0 10px;
