@@ -4116,6 +4116,12 @@ a.post-thumbnail:hover img {
   .primary-sidebar .jetpack_subscription_widget #subscribe-field {
     width: 100%;
   }
+
+  .footer-sidebar #text-7,
+  .footer-sidebar .widget_categories,
+  .footer-sidebar .widget_tag_cloud {
+    display: block;
+  }
 }
 
 @media screen and (min-width: 1040px) {
