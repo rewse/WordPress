@@ -3504,6 +3504,18 @@ a.post-thumbnail:hover img {
 	.site-info {
 		padding: 15px 30px;
 	}
+
+  .primary-sidebar .widget_more_about .twitter-link,
+  .primary-sidebar .widget_more_about .facebook-link,
+  .primary-sidebar .widget_more_about .linkedin-link,
+  .primary-sidebar .widget_more_about .github-link,
+  .primary-sidebar .widget_more_about .yelp-link {
+    display: inline;
+    width: auto;
+    height: auto;
+    margin: 0 20px 0 0;
+    padding: 0;
+  }
 }
 
 @media screen and (min-width: 783px) {
