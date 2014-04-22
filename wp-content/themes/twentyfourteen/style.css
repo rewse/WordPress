@@ -3171,6 +3171,8 @@ a.post-thumbnail:hover {
 	width: device-width;
 }
 
+/* 1 pane layout */
+
 a.post-thumbnail:hover img {
   opacity: 0.85;
 }
@@ -3361,6 +3363,7 @@ a.post-thumbnail:hover img {
 	}
 }
 
+/* 2 panes layout */
 @media screen and (min-width: 673px) {
 	.header-main {
     padding: 0 0 0 30px;
@@ -3751,6 +3754,7 @@ a.post-thumbnail:hover img {
 	}
 }
 
+/* 3 panes layout */
 @media screen and (min-width: 1008px) {
 	.search-box-wrapper {
 		padding-left: 182px;
