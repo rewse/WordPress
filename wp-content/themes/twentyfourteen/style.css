@@ -4092,6 +4092,10 @@ a.post-thumbnail:hover img {
 		height: 120px;
 	}
 
+  .author-description {
+    display: none;
+  }
+
   .primary-sidebar .widget_more_about .twitter-link,
   .primary-sidebar .widget_more_about .facebook-link,
   .primary-sidebar .widget_more_about .linkedin-link,
