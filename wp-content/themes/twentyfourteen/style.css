@@ -4106,6 +4106,12 @@ a.post-thumbnail:hover img {
     display: block;
     margin: 0;
   }
+
+  .primary-sidebar .widget_rss_links p {
+    display: block;
+    margin: 0;
+    padding-bottom: 6px;
+  }
 }
 
 @media screen and (min-width: 1040px) {
