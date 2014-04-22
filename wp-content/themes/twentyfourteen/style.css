@@ -3303,6 +3303,10 @@ a.post-thumbnail:hover img {
   margin-bottom: 24px;
 }
 
+.primary-sidebar .widget_about {
+  max-width: 474px;
+}
+
 .primary-sidebar .widget_more_about .twitter-link {
   width: 81px;
   height: 21px;
