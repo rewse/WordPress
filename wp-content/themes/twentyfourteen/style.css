@@ -4101,6 +4101,11 @@ a.post-thumbnail:hover img {
     margin: 0;
     padding-bottom: 6px;
   }
+
+  .primary-sidebar .widget_categories li {
+    display: block;
+    margin: 0;
+  }
 }
 
 @media screen and (min-width: 1040px) {
