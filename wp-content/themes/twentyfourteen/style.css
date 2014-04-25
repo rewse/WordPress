@@ -3309,57 +3309,59 @@ a.post-thumbnail:hover img {
   max-width: 474px;
 }
 
-.primary-sidebar .widget_more_about .twitter-link {
-  width: 81px;
-  height: 21px;
-}
-
-.primary-sidebar .widget_more_about .facebook-link {
-  width: 95px;
-  height: 21px;
-  margin-top: -21px;
-  padding-left: 101px;
-}
-
-.primary-sidebar .widget_more_about .linkedin-link {
-  width: 88px;
-  height: 21px;
-  margin-top: -21px;
-  padding-left: 216px;
-}
-
-.primary-sidebar .widget_more_about .github-link {
-  width: 81px;
-  height: 21px;
-}
-
-.primary-sidebar .widget_more_about .yelp-link {
-  width: 95px;
-  height: 21px;
-  margin-top: -21px;
-  padding-left: 101px;
-}
-
-.primary-sidebar .widget_categories li {
-  display: inline;
-  margin-right: 20px;
-  border-top: 0;
-  white-space: nowrap;
-}
-
-.primary-sidebar .widget_rss_links p {
-  display: inline;
-  margin-right: 40px;
-}
-
-.primary-sidebar .jetpack_subscription_widget #subscribe-field {
-  width: 50%;
-}
-
 .footer-sidebar #text-7,
 .footer-sidebar .widget_categories,
 .footer-sidebar .widget_tag_cloud {
   display: none;
+}
+
+@media screen and (min-width: 320px) {
+  .primary-sidebar .widget_more_about .twitter-link {
+    width: 81px;
+    height: 21px;
+  }
+
+  .primary-sidebar .widget_more_about .facebook-link {
+    width: 95px;
+    height: 21px;
+    margin-top: -21px;
+    padding-left: 101px;
+  }
+
+  .primary-sidebar .widget_more_about .linkedin-link {
+    width: 88px;
+    height: 21px;
+    margin-top: -21px;
+    padding-left: 216px;
+  }
+
+  .primary-sidebar .widget_more_about .github-link {
+    width: 81px;
+    height: 21px;
+  }
+
+  .primary-sidebar .widget_more_about .yelp-link {
+    width: 95px;
+    height: 21px;
+    margin-top: -21px;
+    padding-left: 101px;
+  }
+
+  .primary-sidebar .widget_categories li {
+    display: inline;
+    margin-right: 20px;
+    border-top: 0;
+    white-space: nowrap;
+  }
+
+  .primary-sidebar .widget_rss_links p {
+    display: inline;
+    margin-right: 40px;
+  }
+
+  .primary-sidebar .jetpack_subscription_widget #subscribe-field {
+    width: 50%;
+  }
 }
 
 @media screen and (min-width: 594px) {
