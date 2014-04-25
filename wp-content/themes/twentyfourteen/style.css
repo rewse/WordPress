@@ -105,7 +105,7 @@ input,
 select,
 textarea {
 	color: #2b2b2b;
-	font-family: Lato, sans-serif;
+  font-family: Lato, "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
 	font-size: 16px;
 	font-weight: 400;
   line-height: 1.6363636363;
@@ -1918,7 +1918,7 @@ a.post-thumbnail:hover {
 
 .comment-reply-title,
 .comments-title {
-	font: 900 16px/1.5 Lato, sans-serif;
+	font: 900 16px/1.5 Lato, "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
 	margin: 0;
 	text-transform: uppercase;
 }
