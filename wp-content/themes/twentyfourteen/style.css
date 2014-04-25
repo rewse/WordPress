@@ -1257,6 +1257,8 @@ a.post-thumbnail:hover {
 .entry-content,
 .entry-summary,
 .page-content {
+  text-align: justify;
+  -ms-text-justify: inter-ideograph;
 	-webkit-hyphens: auto;
 	-moz-hyphens:    auto;
 	-ms-hyphens:     auto;
@@ -2180,6 +2182,11 @@ a.post-thumbnail:hover {
 
 .primary-sidebar {
 	padding-top: 48px;
+}
+
+.primary-sidebar p {
+  text-align: justify;
+  -ms-text-justify: inter-ideograph;
 }
 
 .secondary-navigation + .primary-sidebar {
