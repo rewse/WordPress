@@ -4433,3 +4433,10 @@ a.post-thumbnail:hover img {
 		line-height: 36px;
 	}
 }
+
+/* Legacy */
+
+.eyecatch {
+  text-align: center;
+  margin-bottom: 36px;
+}
