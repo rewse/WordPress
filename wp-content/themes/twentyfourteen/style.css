@@ -1081,6 +1081,7 @@ span + .edit-link:before,
 	position: relative;
 	width: 100%;
 	z-index: 0;
+  text-align: center;
 }
 
 a.post-thumbnail:hover {
