@@ -2206,6 +2206,9 @@ a.post-thumbnail:hover {
 	padding: 48px 10px 0;
 }
 
+.content-sidebar .entry-content p:first-child {
+  text-align: center;
+}
 
 /**
  * 7.1 Widgets
