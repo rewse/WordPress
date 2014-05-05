@@ -1770,6 +1770,10 @@ a.post-thumbnail:hover {
 	margin-bottom: 24px;
 }
 
+.affil-amazon {
+  float: right;
+  margin-left: 30px;
+}
 
 /**
  * 6.9 Archives
