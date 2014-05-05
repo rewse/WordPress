@@ -362,6 +362,7 @@ if ( !class_exists( 'All_in_One_SEO_Pack_Opengraph' ) ) {
 				
 				/* Add some defaults */
 				if ( empty( $title ) ) $title = get_the_title();
+        if ( empty( $description ) ) $description = get_the_excerpt();
 				if ( empty( $description ) && ( $this->options['aiosp_opengraph_generate_descriptions'] ) )
 					$description = $post->post_content;
 				if ( empty( $type ) ) $type = 'article';
