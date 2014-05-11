@@ -144,32 +144,32 @@ h6 {
 
 h1 {
 	font-size: 26px;
-	line-height: 1.3846153846;
+	line-height: 1.4;
 }
 
 h2 {
 	font-size: 24px;
-	line-height: 1;
+  line-height: 1.4;
 }
 
 h3 {
 	font-size: 22px;
-	line-height: 1.0909090909;
+  line-height: 1.4;
 }
 
 h4 {
 	font-size: 20px;
-	line-height: 1.2;
+  line-height: 1.4;
 }
 
 h5 {
 	font-size: 18px;
-	line-height: 1.3333333333;
+  line-height: 1.4;
 }
 
 h6 {
 	font-size: 16px;
-	line-height: 1.5;
+  line-height: 1.4;
 }
 
 address {
@@ -2034,6 +2034,8 @@ a.post-thumbnail:hover {
 }
 
 .comment-content {
+  text-align: justify;
+  -ms-text-justify: inter-ideograph;
 	-webkit-hyphens: auto;
 	-moz-hyphens:    auto;
 	-ms-hyphens:     auto;
