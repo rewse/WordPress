@@ -1263,8 +1263,6 @@ a.post-thumbnail:hover {
 .entry-content,
 .entry-summary,
 .page-content {
-  text-align: justify;
-  -ms-text-justify: inter-ideograph;
 	-webkit-hyphens: auto;
 	-moz-hyphens:    auto;
 	-ms-hyphens:     auto;
@@ -2039,8 +2037,6 @@ a.post-thumbnail:hover {
 }
 
 .comment-content {
-  text-align: justify;
-  -ms-text-justify: inter-ideograph;
 	-webkit-hyphens: auto;
 	-moz-hyphens:    auto;
 	-ms-hyphens:     auto;
@@ -2194,11 +2190,6 @@ a.post-thumbnail:hover {
 
 .primary-sidebar {
 	padding-top: 48px;
-}
-
-.primary-sidebar p {
-  text-align: justify;
-  -ms-text-justify: inter-ideograph;
 }
 
 .secondary-navigation + .primary-sidebar {
@@ -3376,6 +3367,17 @@ a.post-thumbnail:hover img {
 
   .primary-sidebar .jetpack_subscription_widget #subscribe-field {
     width: 50%;
+  }
+}
+
+@media screen and (min-width: 510px) {
+  .entry-content,
+  .entry-summary,
+  .page-content,
+  .comment-content,
+  .primary-sidebar p {
+    text-align: justify;
+    -ms-text-justify: inter-ideograph;
   }
 }
 
