@@ -40,14 +40,6 @@ define('NONCE_SALT',       '#B0lp7*.c4xqM RB=!ebU`GCy~(LAY_@+Vbdt+a%Hdqrv-QJwW?I
 /**#@-*/
 
 /**
- * WordPress Database Table prefix.
- *
- * You can have multiple installations in one database if you give each a unique
- * prefix. Only numbers, letters, and underscores please!
- */
-$table_prefix  = 'dev_';
-
-/**
  * WordPress Localized Language, defaults to English.
  *
  * Change this to localize WordPress. A corresponding MO file for the chosen
