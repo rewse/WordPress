@@ -1,6 +1,21 @@
 #!/bin/sh
 
-DIR=/srv/www/wpdev
+. ./permset.conf
+
+DIR=/srv/www/$DIRNAME
+
+cat <<! > .htaccess
+# BEGIN WordPress
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /$DIRNAME/
+RewriteRule ^index\.php$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /wpdev/index.php [L]
+</IfModule>
+# END WordPress
+!
 
 chown -R tats:apache $DIR
 
@@ -10,6 +25,7 @@ find $DIR -type f -print0 | xargs -0 chmod 644
 find $DIR -name \*.sh -print0 | xargs -0 chmod 755
 
 chown root:root $DIR/permset.sh
+chown root:root $DIR/permset.conf
 
 chmod 664 $DIR/.htaccess
 chmod 640 $DIR/wp-db-config.php
