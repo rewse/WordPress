@@ -1,3 +1,4 @@
 wp-db-config.php
 wp-content/plugins/crayon-syntax-highlighter/log.txt
 wp-content/uploads/
+.htaccess
