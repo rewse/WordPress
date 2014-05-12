@@ -8,7 +8,7 @@ cat <<! > .htaccess
 # BEGIN WordPress
 <IfModule mod_rewrite.c>
 RewriteEngine On
-RewriteBase /$DIRNAME/
+RewriteBase /$LOCNAME/
 RewriteRule ^index\.php$ - [L]
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
