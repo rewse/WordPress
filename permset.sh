@@ -31,9 +31,9 @@ chmod 664 $DIR/.htaccess
 chmod 640 $DIR/wp-db-config.php
 
 find $DIR/wp-content -type d -print0 | xargs -0 chmod 02775
-find $DIR/wp-content -type f -print0 | xargs -0 chmod 644
+find $DIR/wp-content -type f -print0 | xargs -0 chmod 664
 
 chmod 775 $DIR/wp-content/ewww
-chmod 755 $DIR/wp-content/ewww/*
+chmod 775 $DIR/wp-content/ewww/*
 
 restorecon -R $DIR
