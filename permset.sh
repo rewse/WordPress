@@ -12,7 +12,7 @@ RewriteBase /$LOCNAME/
 RewriteRule ^index\.php$ - [L]
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule . /wpdev/index.php [L]
+RewriteRule . /$LOCNAME/index.php [L]
 </IfModule>
 # END WordPress
 !
