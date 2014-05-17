@@ -2644,6 +2644,11 @@ a.post-thumbnail:hover {
   font: normal 12px/1 Genericons;
 }
 
+.widget_more_about .googleplus:before {
+  content: '\f218\0020';
+  font: normal 12px/1 Genericons;
+}
+
 
 /**
  * 7.2 Content Sidebar Widgets
