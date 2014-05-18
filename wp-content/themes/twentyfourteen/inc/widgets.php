@@ -226,7 +226,7 @@ class Twenty_Fourteen_Ephemera_Widget extends WP_Widget {
 
                 the_excerpt();
               else:
-								the_content( __( 'Continue reading <span class="meta-nav">&rarr;</span>', 'twentyfourteen' ) );
+								the_content( __( 'Continue reading <span class="meta-nav">&rarr;</span>', 'twentyfourteen' ), true );
 							endif;
 						?>
 					</div><!-- .entry-content -->
