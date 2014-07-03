@@ -4,3 +4,4 @@ wp-content/plugins/crayon-syntax-highlighter/log.txt
 permset.conf
 wp-content/uploads
 wp-content/cache
+wp-content/wp-cache-config.php
