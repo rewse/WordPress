@@ -1,7 +1,7 @@
 <?php
 /**
  * Author: Alin Marcu
- * Author URI: http://deconf.com
+ * Author URI: https://deconf.com
  * License: GPLv2 or later
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  */
@@ -86,11 +86,10 @@ if (! class_exists ( 'GADASH_Tools' )) {
 			if (is_user_logged_in () && isset ( $access_level )) {
 				global $current_user;
 				$roles = $current_user->roles;
-
 				if ((current_user_can ( 'manage_options' )) and ! $tracking) {
 					return true;
 				}
-				if (in_array ( $roles[0], $access_level )) {
+				if (isset($roles[0]) && in_array ( $roles[0], $access_level )) {
 					return true;
 				} else {
 					return false;
