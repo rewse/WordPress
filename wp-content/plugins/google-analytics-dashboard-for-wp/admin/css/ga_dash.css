@@ -96,6 +96,10 @@ td.title, td.info{
 	padding-left:20px;
 }
 
+td.title-select{
+	width:300px;	
+}
+
 td.debugging {
 	width:150px;
 }
@@ -202,4 +206,12 @@ pre.log_data{
 
 td.roles{
 	padding-bottom:15px;
+}
+
+#ga_speed_samplerate, #ga_target_number, #ga_realtime_pages{
+	width:50px;	
+}
+
+.event-option, .event-option-desc{
+	float:left;
 }
