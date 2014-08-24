@@ -2657,6 +2657,10 @@ a.post-thumbnail:hover {
   margin-bottom: 0;
 }
 
+.widget .twitter-button {
+  margin-top: 18px;
+}
+
 
 /**
  * 7.2 Content Sidebar Widgets
