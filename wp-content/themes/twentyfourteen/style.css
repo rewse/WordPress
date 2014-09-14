@@ -2638,8 +2638,8 @@ a.post-thumbnail:hover {
   font: normal 12px/1 Genericons;
 }
 
-.widget_more_about .yelp:before {
-  content: '\f442\0020';
+.widget_more_about .flickr:before {
+  content: '\f211\0020';
   font: normal 12px/1 Genericons;
 }
 
@@ -3342,35 +3342,26 @@ a.post-thumbnail:hover img {
 }
 
 @media screen and (min-width: 320px) {
-  .primary-sidebar .widget_more_about .twitter-link {
+  .primary-sidebar .widget_more_about .twitter-link,
+  .primary-sidebar .widget_more_about .flickr-link {
     width: 81px;
     height: 21px;
   }
 
-  .primary-sidebar .widget_more_about .facebook-link {
+  .primary-sidebar .widget_more_about .facebook-link,
+  .primary-sidebar .widget_more_about .linkedin-link {
     width: 95px;
     height: 21px;
     margin-top: -21px;
     padding-left: 101px;
   }
 
-  .primary-sidebar .widget_more_about .linkedin-link {
+  .primary-sidebar .widget_more_about .github-link,
+  .primary-sidebar .widget_more_about .googleplus-link {
     width: 88px;
     height: 21px;
     margin-top: -21px;
     padding-left: 216px;
-  }
-
-  .primary-sidebar .widget_more_about .github-link {
-    width: 81px;
-    height: 21px;
-  }
-
-  .primary-sidebar .widget_more_about .yelp-link {
-    width: 95px;
-    height: 21px;
-    margin-top: -21px;
-    padding-left: 101px;
   }
 
   .primary-sidebar .widget_categories li {
@@ -3548,9 +3539,10 @@ a.post-thumbnail:hover img {
 
   .primary-sidebar .widget_more_about .twitter-link,
   .primary-sidebar .widget_more_about .facebook-link,
-  .primary-sidebar .widget_more_about .linkedin-link,
   .primary-sidebar .widget_more_about .github-link,
-  .primary-sidebar .widget_more_about .yelp-link {
+  .primary-sidebar .widget_more_about .flickr-link,
+  .primary-sidebar .widget_more_about .linkedin-link,
+  .primary-sidebar .widget_more_about .googleplus-link {
     display: inline;
     width: auto;
     height: auto;
@@ -4124,12 +4116,17 @@ a.post-thumbnail:hover img {
 
   .primary-sidebar .widget_more_about .twitter-link,
   .primary-sidebar .widget_more_about .facebook-link,
-  .primary-sidebar .widget_more_about .linkedin-link,
   .primary-sidebar .widget_more_about .github-link,
-  .primary-sidebar .widget_more_about .yelp-link {
+  .primary-sidebar .widget_more_about .flickr-link,
+  .primary-sidebar .widget_more_about .linkedin-link {
     display: block;
     margin: 0;
     padding-bottom: 6px;
+  }
+
+  .primary-sidebar .widget_more_about .googleplus-link {
+    display: block;
+    margin: 0;
   }
 
   .primary-sidebar .widget_categories li {
