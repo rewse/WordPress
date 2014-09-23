@@ -48,6 +48,15 @@ Use it to make something cool, have fun, and share what you've learned with othe
  * -----------------------------------------------------------------------------
  */
 
+@font-face {
+  font-family: SourceHanSansJP-Rewse-L;
+  src: url("woff/SourceHanSansJP-Rewse-L.woff") format("woff");
+}
+
+@font-face {
+  font-family: SourceHanSansJP-Rewse-EL;
+  src: url("woff/SourceHanSansJP-Rewse-EL.woff") format("woff");
+}
 
 /**
  * 1.0 Reset
@@ -862,7 +871,7 @@ span + .edit-link:before,
 	float: left;
   font-size: 33px; /* Same as #content .entry-title */
 	font-weight: 300;
-  font-family: Lato, "新ゴ EL JIS2004", "Shin Go ExLight JIS2004", sans-serif;
+  font-family: Lato, SourceHanSansJP-Rewse-EL, sans-serif;
   line-height: 63px; /* Add 30px to font-size */
 	margin: 0;
 
@@ -1150,7 +1159,7 @@ a.post-thumbnail:hover {
 
 /* Need to exclude #content-sidebar .entry-title */
 #content .entry-title {
-  font-family: Lato, "新ゴ EL JIS2004", "Shin Go ExLight JIS2004", sans-serif;
+  font-family: Lato, SourceHanSansJP-Rewse-L, sans-serif;
 }
 
 .entry-meta a:hover {
@@ -1786,7 +1795,7 @@ a.post-thumbnail:hover {
 .page-title {
   font-size: 33px; /* Same as #content .entry-title */
   font-weight: 300;
-  font-family: Lato, "新ゴ EL JIS2004", "Shin Go ExLight JIS2004", sans-serif;
+  font-family: Lato, SourceHanSansJP-Rewse-L, sans-serif;
 	line-height: 1.5;
 	margin: 0;
 }
