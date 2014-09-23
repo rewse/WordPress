@@ -32,6 +32,7 @@ chmod 640 $DIR/wp-db-config.php
 
 find $DIR/wp-content -type d -print0 | xargs -0 chmod 02775
 find $DIR/wp-content -type f -print0 | xargs -0 chmod 664
+find $DIR/wp-content -name \*.sh -print0 | xargs -0 chmod 700
 
 chmod 775 $DIR/wp-content/ewww
 chmod 755 $DIR/wp-content/ewww/*
