@@ -173,104 +173,66 @@ class Jetpack_Top_Posts_Widget extends WP_Widget {
 		switch ( $display ) {
 		case 'list' :
 		case 'grid' :
+			wp_enqueue_style( 'widget-grid-and-list' );
+			foreach ( $posts as &$post ) {
+				$image = Jetpack_PostImages::get_image( $post['post_id'], array( 'fallback_to_avatars' => true ) );
+				$post['image'] = $image['src'];
+				if ( 'blavatar' != $image['from'] && 'gravatar' != $image['from'] ) {
+					$size = (int) $get_image_options['avatar_size'];
+					$post['image'] = jetpack_photon_url( $post['image'], array( 'resize' => "$size,$size" ) );
+				}
+			}
+
+			unset( $post );
+
 			if ( 'grid' == $display ) {
-        wp_enqueue_style( 'widget-grid-and-list' );
-        foreach ( $posts as &$post ) {
-          $image = Jetpack_PostImages::get_image( $post['post_id'], array( 'fallback_to_avatars' => true ) );
-          $post['image'] = $image['src'];
-          if ( 'blavatar' != $image['from'] && 'gravatar' != $image['from'] ) {
-            $size = (int) $get_image_options['avatar_size'];
-            $post['image'] = jetpack_photon_url( $post['image'], array( 'resize' => "$size,$size" ) );
-          }
-        }
-
-        unset( $post );
-
 				echo "<div class='widgets-grid-layout no-grav'>\n";
 				foreach ( $posts as $post ) :
 				?>
 					<div class="widget-grid-view-image">
-						<a href="<?php echo esc_url( $post['permalink'] ); ?>" title="<?php echo esc_attr( wp_kses( $post['title'], array() ) ); ?>" class="bump-view" data-bump-view="tp"><img src="<?php echo esc_url( $post['image'] ); ?>" alt="<?php echo esc_attr( wp_kses( $post['title'], array() ) ); ?>" /></a>
+						<?php do_action( 'jetpack_widget_top_posts_before_post', $post['post_id'] ); ?>
+						<a href="<?php echo esc_url( $post['permalink'] ); ?>" title="<?php echo esc_attr( wp_kses( $post['title'], array() ) ); ?>" class="bump-view" data-bump-view="tp">
+							<img src="<?php echo esc_url( $post['image'] ); ?>" alt="<?php echo esc_attr( wp_kses( $post['title'], array() ) ); ?>" />
+						</a>
+						<?php do_action( 'jetpack_widget_top_posts_after_post', $post['post_id'] ); ?>
 					</div>
-
 				<?php
 				endforeach;
 				echo "</div>\n";
 			} else {
-        echo "<ol>\n";
-        foreach ( $posts as $post ) :
-          $top_posts = new WP_Query( 'p=' . $post['post_id'] );
-
-          if ( $top_posts->have_posts() ) : while ( $top_posts->have_posts() ) : $top_posts->the_post();
-            $images = array();
-
-            $images = get_posts( array(
-              'fields'         => 'ids',
-              'numberposts'    => -1,
-              'order'          => 'ASC',
-              'orderby'        => 'menu_order',
-              'post_mime_type' => 'image',
-              'post_parent'    => get_the_ID(),
-              'post_type'      => 'attachment',
-            ) );
-
-            $total_images = count( $images );
-
-            if ( has_post_thumbnail() ) :
-              $post_thumbnail = get_the_post_thumbnail();
-            elseif ( $total_images > 0 ) :
-              $image          = array_shift( $images );
-              $post_thumbnail = wp_get_attachment_image( $image, 'post-thumbnail' );
-            else :
-              unset( $post_thumbnail );
-            endif;
-        ?>
-          <li>
-          <article <?php post_class(); ?>>
-          <div class="entry-content">
-          <?php if ( ! empty ( $post_thumbnail ) ) : ?>
-            <p><a href="<?php echo get_permalink(); ?>"><?php echo $post_thumbnail; ?></a></p>
-          <?php
-            endif;
-
-            the_excerpt();
-          ?>
-            </div><!-- .entry-content -->
-
-            <header class="entry-header">
-            <div class="entry-meta">
-            <?php
-              if ( ! has_post_format( 'link' ) && ! has_post_format( 'aside' )) :
-                the_title( '<h1 class="entry-title"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></h1>' );
-              endif;
-
-              printf( '<span class="entry-date"><a href="%1$s" rel="bookmark"><time class="entry-date" datetime="%2$s">%3$s</time></a></span> <span class="byline"><span class="author vcard"><a clss="url fn n" href="%4$s" rel="author">%5$s</a></span></span>',
-                esc_url( get_permalink() ),
-                esc_attr( get_the_date( 'c' ) ),
-                esc_html( get_the_date() ),
-                esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ),
-                get_the_author()
-              );
-
-              if ( ! post_password_required() && ( comments_open() || get_comments_number() ) ) :
-            ?>
-            <span class="comments-link"><?php comments_popup_link( __( 'Leave a comment', 'twentyfourteen' ), __( '1 Comment', 'twnetyfourteen' ), __( '% Comments', 'twentyfourteen' ) ); ?></span>
-            </div><!-- .entry-meta -->
-            </header><!-- .entry-header -->
-          </article><!-- #post-## -->
-          </li>
-        <?php
-              endif;
-          endwhile; endif;
+				echo "<ul class='widgets-list-layout no-grav'>\n";
+				foreach ( $posts as $post ) :
+				?>
+					<li>
+						<?php do_action( 'jetpack_widget_top_posts_before_post', $post['post_id'] ); ?>
+						<a href="<?php echo esc_url( $post['permalink'] ); ?>" title="<?php echo esc_attr( wp_kses( $post['title'], array() ) ); ?>" class="bump-view" data-bump-view="tp">
+							<img src="<?php echo esc_url( $post['image'] ); ?>" class='widgets-list-layout-blavatar' alt="<?php echo esc_attr( wp_kses( $post['title'], array() ) ); ?>" />
+						</a>
+						<div class="widgets-list-layout-links">
+							<a href="<?php echo esc_url( $post['permalink'] ); ?>" class="bump-view" data-bump-view="tp">
+								<?php echo esc_html( wp_kses( $post['title'], array() ) ); ?>
+							</a>
+						</div>
+						<?php do_action( 'jetpack_widget_top_posts_after_post', $post['post_id'] ); ?>
+					</li>
+				<?php
 				endforeach;
-        echo "</ol>\n";
+				echo "</ul>\n";
 			}
 			break;
 		default :
 			echo '<ul>';
-			foreach ( $posts as $post ) {
-				echo '<li><a href="' . esc_url( $post['permalink'] ) . '" class="bump-view" data-bump-view="tp">' . esc_html( wp_kses( $post['title'], array() ) ) . "</a></li>\n";
-			}
+			foreach ( $posts as $post ) :
+			?>
+				<li>
+					<?php do_action( 'jetpack_widget_top_posts_before_post', $post['post_id'] ); ?>
+					<a href="<?php echo esc_url( $post['permalink'] ); ?>" class="bump-view" data-bump-view="tp">
+						<?php echo esc_html( wp_kses( $post['title'], array() ) ); ?>
+					</a>
+					<?php do_action( 'jetpack_widget_top_posts_after_post', $post['post_id'] ); ?>
+				</li>
+			<?php
+			endforeach;
 			echo '</ul>';
 		}
 
