@@ -4,18 +4,18 @@ Donate link: https://deconf.com/donate/
 Tags: google,analytics,google analytics,dashboard,analytics dashboard,google analytics dashboard,google analytics widget,tracking,realtime,wpmu,multisite
 Requires at least: 2.8
 Tested up to: 4.0
-Stable tag: 4.3.3
+Stable tag: 4.3.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Displays Google Analytics Reports and Real-Time Statistics in your Dashboard. Automatically inserts the tracking code in every page of your website.
+Displays Google Analytics reports and real-time statistics in your WordPress Dashboard. Inserts the latest tracking code in every page of your site.
 
 == Description ==
-Using a widget, [Google Analytics Dashboard](https://deconf.com/google-analytics-dashboard-wordpress/) displays detailed analytics info and statistics about: number of visits, number of visitors, bounce rates, organic searches, pages per visit directly on your Administration Dashboard.
+Using a widget, [Google Analytics Dashboard](https://deconf.com/google-analytics-dashboard-wordpress/) displays detailed analytics info and statistics about: number of visits, number of visitors, bounce rates, organic searches, pages per visit directly on your WordPress Dashboard.
 
 Authorized users can also view statistics like Views, UniqueViews and top searches, on frontend, at the end of each article.
 
-Using this plugin, your analytics data is collected in a fast and secure manner because Google Analytics Dashboard uses OAuth2 protocol and Google Analytics API.
+Using this WordPress plugin, your analytics data is collected in a fast and secure manner because Google Analytics Dashboard uses OAuth2 protocol and Google Analytics API.
 
 = Google Analytics Dashboard =
 
@@ -36,9 +36,9 @@ Using this plugin, your analytics data is collected in a fast and secure manner 
 
 - enable/disable google analytics tracking code
 - switch between universal analytics and classic analytics tracking methods
-- supports analytics.js tracking for comaptibility with Universal Analytics web property  
-- supports ga.js tracking for comaptibility with Classic Analytics web property
-- automatically generates the tracking code; the user can also define a custom code
+- supports analytics.js tracking for compatibility with Universal Analytics web property  
+- supports ga.js tracking for compatibility with Classic Analytics web property
+- automatically generates the Google Analytics tracking code
 - IP address anonymization feature
 - enhanced link attribution feature
 - remarketing, demographics and interests tracking
@@ -47,29 +47,35 @@ Using this plugin, your analytics data is collected in a fast and secure manner 
 - track events feature: track downloads, emails and outbound links (supported for both tracking methods: classic tracking and universal tracking)
 - exclude traffic based on user level access
 - option to exclude event tracking from bounce-rate calculation
+- multiple domains / cross domain tracking
+- action hook for code customization
+- track authors, publication year, categories and user engagement using Google Analytics custom dimensions
+- affiliate links tracking with Google Analytics
 
 = WPMU features =
 
-- authorize the entire network with a single Google Account
+- authorize an entire WordPress Network using a single Google Account
 - set corresponding properties/views, for each blog, from you Network Admin screen
 
 = Translations =
 
 Google Analytics Dashboard for WP has been translated into the following languages:
 
-1. English
-2. German
-3. Hungarian
-4. Italian
-5. Polish
-6. Portuguese
-7. Spanish
+1. Arabic
+2. English
+3. French
+4. German
+5. Hungarian
+6. Italian
+7. Polish
+8. Portuguese
+9. Spanish
 
 = Further reading and info =
 
-* My [Google Analytics Dashboard](https://deconf.com/google-analytics-dashboard-wordpress/) homepage
+* Homepage of [Google Analytics Dashboard](https://deconf.com/google-analytics-dashboard-wordpress/) for WordPress
 * Other [WordPress Plugins](https://deconf.com/wordpress/) by same author
-* [Google Analytics Dashboard](https://deconf.com/ask/) translations and support 
+* To submit new translation use [this forum](https://deconf.com/ask/) 
 
 == Installation ==
 
@@ -113,6 +119,28 @@ A dedicated section for Wordpress Plugins is available here: [Wordpress Plugins 
 This plugin it's released under the GPLv2, you can use it free of charge on your personal or commercial website.
 
 == Changelog ==
+
+= 4.3.6 =
+- bugfix: clear cache not working properly
+- bugfix: error correction in Spanish localization file
+
+= 4.3.5 =
+- bugfix: authors custom dimension not working for pages, reported by [tylerarnold23](https://wordpress.org/support/profile/tylerarnold23)
+- bugfix: outbound detection
+- bugfix: fixed unicode issue, reported by [Haruka_Suzuki](https://wordpress.org/support/profile/haruka_suzuki)
+- bugfix: properly display cities with same name from different regions, reported by [matt6303](https://wordpress.org/support/profile/matt6303)
+- tweak: removed image extensions from default download filter
+- tweak: add day of week to dashboard dates, suggested by [nethrs](https://deconf.com/ask/author/timnethers/)
+- feature: Arabic translation, translated by [Ahmed Majed](https://deconf.com/ask/author/almobdaa/)
+- bugfix: multiple fixes for real time reports
+
+= 4.3.4 =
+- feature: ga_dash_addtrackingcode action hook
+- feature: French translation
+- feature: cross domain tracking support
+- feature: Google Analytics custom definitions, using custom dimensions to track authors, years, categories and engagement
+- feature: support for affiliate links tracking 
+- tweak: never treat downloads as outbound links
 
 = 4.3.3 =
 - feature: added Polish translation
