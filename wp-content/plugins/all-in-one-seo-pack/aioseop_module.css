@@ -607,6 +607,7 @@ div#aioseop_snippet {
 }
 div#aioseop_snippet > h3 {
 	font-size: 16px;
+	padding: 8px 0;
 	border: 0px;
 	background: inherit;
 }
@@ -838,6 +839,14 @@ table.aioseop_table td, table.aioseop_table th {
 }
 .aioseop_option_docs h3 {
 	background:none;
+}
+div.aioseop_notice {
+	position: relative;
+}
+div.aioseop_notice a.aioseop_dismiss_link {
+	position: absolute;
+	top: 10px;
+	right: 10px;
 }
 .aioseop_error_notice {
 	color: #f00;
