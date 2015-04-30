@@ -475,7 +475,6 @@ if ( !class_exists( 'All_in_One_SEO_Pack_Opengraph' ) ) {
 				if( empty($title) ) $title = get_bloginfo('name');
 				if( empty($sitename) ) $sitename = get_bloginfo('name');
 				
-        if ( empty( $description ) ) $description = get_the_excerpt();
 				if ( empty( $description ) && $first_page && ( !empty( $this->options['aiosp_opengraph_generate_descriptions'] ) ) && !empty( $post ) && !empty( $post->post_content ) && !post_password_required( $post ) )
 					$description = $aiosp->trim_excerpt_without_filters( $aiosp->internationalize( preg_replace( '/\s+/', ' ', $post->post_content ) ), 1000 );
 				
