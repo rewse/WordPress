@@ -36,5 +36,6 @@ find $DIR/wp-content -name \*.sh -print0 | xargs -0 chmod 700
 
 chmod 775 $DIR/wp-content/ewww
 chmod 755 $DIR/wp-content/ewww/*
+chown -R apache:apache $DIR/wp-content/ewww
 
 restorecon -R $DIR
