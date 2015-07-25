@@ -8,7 +8,7 @@
 
 class Jetpack_RSS_Links_Widget extends WP_Widget {
 
-	function Jetpack_RSS_Links_Widget() {
+	function __construct() {
 		$widget_ops = array( 'classname' => 'widget_rss_links', 'description' => __( "Links to your blog's RSS feeds", 'jetpack' ) );
 		parent::__construct( 'rss_links', __( 'RSS Links (Jetpack)', 'jetpack' ), $widget_ops );
 	}
@@ -18,6 +18,7 @@ class Jetpack_RSS_Links_Widget extends WP_Widget {
 
 		extract( $args );
 
+		/** This filter is documented in core/src/wp-includes/default-widgets.php */
 		$title = apply_filters( 'widget_title', $instance['title'] );
 		echo $before_widget;
 
@@ -158,6 +159,13 @@ class Jetpack_RSS_Links_Widget extends WP_Widget {
 		$link_item = '';
 		$format = $args['format'];
 
+		/**
+		 * Filters the target link attribute for the RSS link in the RSS widget.
+		 *
+		 * @since 3.4.0
+		 *
+		 * @param bool false Control whether the link should open in a new tab. Default to false.
+		 */
 		if ( apply_filters( 'jetpack_rsslinks_widget_target_blank', false ) ) {
 			$link_target = '_blank';
 		} else {
@@ -172,8 +180,8 @@ class Jetpack_RSS_Links_Widget extends WP_Widget {
 			 *
 			 * @param string $var URL of RSS Widget icon.
 			 */
-			$link_image = apply_filters( 'jetpack_rss_widget_icon', plugins_url( 'images/rss/' . $args['imagecolor'] . '-' . $args['imagesize'] . '@2x.png', dirname( dirname( __FILE__ ) ) ) );
-			$link_item = '<a target="' . $link_target . '" href="' . get_bloginfo( $rss_type ) . '" title="' . esc_attr( $subscribe_to ) . '"><img src="' . esc_url( $link_image ) . '" alt="RSS Feed" width="14px" height="14px" /></a>';
+			$link_image = apply_filters( 'jetpack_rss_widget_icon', plugins_url( 'images/rss/' . $args['imagecolor'] . '-' . $args['imagesize'] . '.png', dirname( dirname( __FILE__ ) ) ) );
+			$link_item = '<a target="' . $link_target . '" href="' . get_bloginfo( $rss_type ) . '" title="' . esc_attr( $subscribe_to ) . '"><img src="' . esc_url( $link_image ) . '" alt="RSS Feed" /></a>';
 		}
 		if ( 'text-image' == $format ) {
 			$link_item .= '&nbsp;<a target="' . $link_target . '" href="' . get_bloginfo( $rss_type ) . '" title="' . esc_attr( $subscribe_to ) . '">' . esc_html__( 'RSS - ' . $type_text, 'jetpack' ). '</a>';
