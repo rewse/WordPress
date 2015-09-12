@@ -1117,7 +1117,6 @@ a.post-thumbnail:hover {
 	line-height: 1.0909090909;
 	margin-bottom: 12px;
 	margin: 0 0 12px 0;
-	text-transform: uppercase;
 }
 
 .entry-title a {
@@ -1480,7 +1479,6 @@ a.post-thumbnail:hover {
 	font-weight: 900;
 	line-height: 2;
 	margin: 24px 0;
-	text-transform: uppercase;
 }
 
 .page-links a,
@@ -1932,7 +1930,6 @@ a.post-thumbnail:hover {
 .comments-title {
 	font: 900 16px/1.5 Lato, "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
 	margin: 0;
-	text-transform: uppercase;
 }
 
 .comment-list {
