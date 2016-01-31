@@ -15,29 +15,14 @@
 div.sharedaddy,
 #content div.sharedaddy,
 #main div.sharedaddy {
-  font-family: Lato, sans-serif;
-	font-size: 12px;
 	clear: both;
 }
 
-div.sharedaddy,
-div.sharedaddy div {
-	-webkit-border-radius: 0 !important;
-	-moz-border-radius: 0 !important;
-	border-radius: 0 !important;
-}
-
-div.sharedaddy h3,
-#content div.sharedaddy h3,
-#main div.sharedaddy h3,
-#primary div.sharedaddy h3 {
-	font-size: 12px;
-  font-family: Lato, sans-serif;
-	margin: 3px 0;
-	padding: 0;
-	text-transform: none;
-	letter-spacing: 0;
-	line-height: 1;
+div.sharedaddy h3.sd-title {
+	margin: 0 0 1em 0;
+	display: inline-block;
+	line-height: 1.2;
+	font-size: 9pt;
 	font-weight: bold;
 }
 
@@ -258,6 +243,12 @@ body .sd-content ul li.share-custom.no-icon a span {
 .sd-social-icon-text .sd-content li.share-pocket a:before {
 	content: '\f224';
 }
+.sd-social-icon .sd-content ul li.share-skype a:before,
+.sd-social-text .sd-content ul li.share-skype a:before,
+.sd-content ul li.share-skype div.option.option-smart-off a:before,
+.sd-social-icon-text .sd-content li.share-skype a:before {
+	content: '\f220';
+}
 .sd-social-icon .sd-content ul li.share-pinterest a:before,
 .sd-social-text .sd-content ul li.share-pinterest a:before,
 .sd-content ul li.share-pinterest div.option.option-smart-off a:before,
@@ -309,8 +300,6 @@ body .sd-content ul li.share-custom.no-icon a span {
 	font-size: 10px;
 	padding: 1px 3px;
 	line-height: 1;
-  font-family: Lato, sans-serif;
-	font-weight: normal;
 }
 
 
@@ -350,12 +339,15 @@ body .sd-content ul li.share-custom.no-icon a span {
 	width: 98px;
 }
 
-.sd-social-official .sd-content .twitter_button iframe {
-	width: 96px;
+.sd-social-official .sd-content .skypeShare {
+	width: 55px;
 }
 
-
 /* Individual official buttons */
+.googleplus1_button .g-plus {
+	vertical-align: top !important;
+}
+
 .reddit_button iframe {
 	margin-top: 1px;
 }
@@ -568,6 +560,11 @@ body .sd-social-icon .sd-content li.share-custom a span {
 
 .sd-social-icon .sd-content ul li[class*='share-'].share-pocket a.sd-button {
 	background: #ee4056;
+	color: #fff !important;
+}
+
+.sd-social-icon .sd-content ul li[class*='share-'].share-skype a.sd-button {
+	background: #00AFF0;
 	color: #fff !important;
 }
 
