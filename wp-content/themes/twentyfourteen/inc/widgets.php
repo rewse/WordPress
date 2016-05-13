@@ -21,7 +21,7 @@ class Twenty_Fourteen_Ephemera_Widget extends WP_Widget {
 	 *
 	 * @var array
 	 */
-	private $formats = array( 'aside', 'image', 'video', 'audio', 'quote', 'link', 'gallery' );
+	private $formats = array( 'standard', 'aside', 'image', 'video', 'audio', 'quote', 'link', 'gallery' );
 
 	/**
 	 * Constructor.
@@ -95,6 +95,10 @@ class Twenty_Fourteen_Ephemera_Widget extends WP_Widget {
 				$format_string      = __( 'Galleries', 'twentyfourteen' );
 				$format_string_more = __( 'More galleries', 'twentyfourteen' );
 				break;
+			case 'standard':
+				$format_string      = __( 'Standards', 'twentyfourteen' );
+				$format_string_more = __( 'More standards', 'twentyfourteen' );
+				break;
 			case 'aside':
 			default:
 				$format_string      = __( 'Asides', 'twentyfourteen' );
@@ -105,21 +109,42 @@ class Twenty_Fourteen_Ephemera_Widget extends WP_Widget {
 		$number = empty( $instance['number'] ) ? 2 : absint( $instance['number'] );
 		$title  = apply_filters( 'widget_title', empty( $instance['title'] ) ? $format_string : $instance['title'], $instance, $this->id_base );
 
-		$ephemera = new WP_Query( array(
-			'order'          => 'DESC',
-			'posts_per_page' => $number,
-			'no_found_rows'  => true,
-			'post_status'    => 'publish',
-			'post__not_in'   => get_option( 'sticky_posts' ),
-			'tax_query'      => array(
-				array(
-					'taxonomy' => 'post_format',
-					'terms'    => array( "post-format-$format" ),
-					'field'    => 'slug',
-					'operator' => 'IN',
-				),
-			),
-		) );
+    if ( $format != 'standard' ) {
+      $ephemera = new WP_Query( array(
+        'order'          => 'DESC',
+        'posts_per_page' => $number,
+        'no_found_rows'  => true,
+        'post_status'    => 'publish',
+        'post__not_in'   => get_option( 'sticky_posts' ),
+        'tax_query'      => array(
+          array(
+            'taxonomy' => 'post_format',
+            'terms'    => array( "post-format-$format" ),
+            'field'    => 'slug',
+            'operator' => 'IN',
+          ),
+        ),
+      ) );
+    } else {
+      $ephemera = new WP_Query( array(
+        'order'          => 'DESC',
+        'posts_per_page' => $number,
+        'no_found_rows'  => true,
+        'post_status'    => 'publish',
+        'post__not_in'   => get_option( 'sticky_posts' ),
+        'tax_query'      => array(
+          array(
+            'taxonomy' => 'post_format',
+            'terms'    => array(
+              "post-format-aside", "post-format-image", "post-format-video", "post-format-audio",
+              "post-format-quote", "post-format-link", "post-format-gallery"
+            ),
+            'field'    => 'slug',
+            'operator' => 'NOT IN',
+          ),
+        ),
+      ) );
+    }
 
 		if ( $ephemera->have_posts() ) :
 			$tmp_content_width = $GLOBALS['content_width'];
@@ -188,8 +213,34 @@ class Twenty_Fourteen_Ephemera_Widget extends WP_Widget {
 						</p>
 						<?php
 								endif;
+              elseif ( $format == 'standard' ) :
+                $images = array();
 
-							else :
+                $images = get_posts( array(
+                  'fields'         => 'ids',
+                  'numberposts'    => -1,
+                  'order'          => 'ASC',
+                  'orderby'        => 'menu_order',
+                  'post_mime_type' => 'image',
+                  'post_parent'    => get_the_ID(),
+                  'post_type'      => 'attachment',
+                ) );
+
+                $total_images = count( $images );
+
+                if ( has_post_thumbnail() ) :
+                  $post_thumbnail = get_the_post_thumbnail();
+                elseif ( $total_images > 0 ) :
+                  $image          = array_shift( $images );
+                  $post_thumbnail = wp_get_attachment_image( $image, 'post-thumbnail' );
+                endif;
+
+                if ( ! empty ( $post_thumbnail ) ) :
+            ?>
+            <p><a href="<?php the_permalink(); ?>"><?php echo $post_thumbnail; ?></a></p>
+            <?php
+                endif;
+              else:
 								the_content( __( 'Continue reading <span class="meta-nav">&rarr;</span>', 'twentyfourteen' ) );
 							endif;
 						?>
