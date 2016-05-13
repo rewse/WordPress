@@ -1211,7 +1211,7 @@ class Share_Custom extends Sharing_Advanced_Source {
 
 	public function get_display( $post ) {
 		$str = $this->get_link( $this->get_process_request_url( $post->ID ), esc_html( $this->name ), sprintf( __( 'Click to share on %s', 'jetpack' ), esc_attr( $this->name ) ), 'share='.$this->id );
-		return str_replace( '<span>', '<span style="' . esc_attr( 'background-image:url("' . addcslashes( esc_url_raw( $this->icon ), '"' ) . '");' ) . ' background-size:16px 16px">', $str );
+		return str_replace( '<span>', '<span style="' . esc_attr( 'background-image:url("' . addcslashes( esc_url_raw( $this->icon ), '"' ) . '");' ) . '">', $str );
 	}
 
 	public function process_request( $post, array $post_data ) {
