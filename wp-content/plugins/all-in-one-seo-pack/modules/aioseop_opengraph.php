@@ -383,7 +383,12 @@ if ( !class_exists( 'All_in_One_SEO_Pack_Opengraph' ) ) {
 					}
 					if ( isset( $this->options["aiosp_opengraph_defcard"] ) ) {
 						$settings[$prefix . 'setcard']['default'] = $this->options["aiosp_opengraph_defcard"];
-					}
+					}					
+					global $aiosp;
+					$info = $aiosp->get_page_snippet_info();
+					extract( $info );
+					$settings["{$prefix}title"]['placeholder'] = $title;
+					$settings["{$prefix}desc"]['placeholder'] = $description;
 				}
 				if ( isset( $current[ $prefix . 'setmeta' ] ) && $current[ $prefix . 'setmeta' ] )
 					foreach ( $opts as $opt )
@@ -516,7 +521,6 @@ if ( !class_exists( 'All_in_One_SEO_Pack_Opengraph' ) ) {
 				if( empty($title) ) $title = get_bloginfo('name');
 				if( empty($sitename) ) $sitename = get_bloginfo('name');
 				
-				if ( empty( $description ) ) $description = get_the_excerpt();
 				if ( empty( $description ) && $first_page && ( !empty( $this->options['aiosp_opengraph_generate_descriptions'] ) ) && !empty( $post ) && !empty( $post->post_content ) && !post_password_required( $post ) )
 					$description = $aiosp->trim_excerpt_without_filters( $aiosp->internationalize( preg_replace( '/\s+/', ' ', $post->post_content ) ), 1000 );
 				
