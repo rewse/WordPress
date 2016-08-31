@@ -108,7 +108,7 @@ class Jetpack_RSS_Links_Widget extends WP_Widget {
 			'image'      => __( 'Image Link', 'jetpack' ),
 			'text-image' => __( 'Text & Image Links', 'jetpack' )
 		);
-		echo '<p><label for="' . $this->get_field_id( 'format' ) . '">' . __( 'Format:', 'jetpack' ) . '
+		echo '<p><label for="' . $this->get_field_id( 'format' ) . '">' . _x( 'Format:', 'Noun', 'jetpack' ) . '
 		<select class="widefat" id="' . $this->get_field_id( 'format' ) . '" name="' . $this->get_field_name( 'format' ) . '" onchange="if ( this.value == \'text\' ) jQuery( \'#' . $this->get_field_id( 'image-settings' ) . '\' ).fadeOut(); else jQuery( \'#' . $this->get_field_id( 'image-settings' ) . '\' ).fadeIn();">';
 		foreach ( $formats as $format_option => $label ) {
 			echo '<option value="' . esc_attr( $format_option ) . '"';
@@ -193,8 +193,8 @@ class Jetpack_RSS_Links_Widget extends WP_Widget {
 			 *
 			 * @param string $var URL of RSS Widget icon.
 			 */
-			$link_image = apply_filters( 'jetpack_rss_widget_icon', plugins_url( 'images/rss/' . $args['imagecolor'] . '-medium.png', dirname( dirname( __FILE__ ) ) ) );
-			$link_item = '<a target="' . $link_target . '" href="' . get_bloginfo( $rss_type ) . '" title="' . esc_attr( $subscribe_to ) . '"><img src="' . esc_url( $link_image ) . '" alt="RSS Feed" width="14px" height="14px" /></a>';
+			$link_image = apply_filters( 'jetpack_rss_widget_icon', plugins_url( 'images/rss/' . $args['imagecolor'] . '-' . $args['imagesize'] . '.png', dirname( dirname( __FILE__ ) ) ) );
+			$link_item = '<a target="' . $link_target . '" href="' . get_bloginfo( $rss_type ) . '" title="' . esc_attr( $subscribe_to ) . '"><img src="' . esc_url( $link_image ) . '" alt="RSS Feed" /></a>';
 		}
 		if ( 'text-image' == $format ) {
 			$link_item .= '&nbsp;<a target="' . $link_target . '" href="' . get_bloginfo( $rss_type ) . '" title="' . esc_attr( $subscribe_to ) . '">' . esc_html__( 'RSS - ' . $type_text, 'jetpack' ). '</a>';
