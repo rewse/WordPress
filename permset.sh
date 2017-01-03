@@ -1,37 +1,33 @@
 #!/bin/sh
 
-. ./permset.conf
-
-DIR=/srv/www/$DIRNAME
+dir=/srv/www/wordpress
 
 cat <<! > .htaccess
 # BEGIN WordPress
 <IfModule mod_rewrite.c>
 RewriteEngine On
-RewriteBase /$LOCNAME/
+RewriteBase /blog/
 RewriteRule ^index\.php$ - [L]
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule . /$LOCNAME/index.php [L]
+RewriteRule . /blog/index.php [L]
 </IfModule>
 # END WordPress
 !
 
-chown -R tats:apache $DIR
+chown -R tats:apache $dir
 
-chmod 02775 $DIR
-find $DIR -type d -print0 | xargs -0 chmod 02755
-find $DIR -type f -print0 | xargs -0 chmod 644
-find $DIR -name \*.sh -print0 | xargs -0 chmod 755
+chmod 02775 $dir
+find $dir -type d -print0 | xargs -0 chmod 02755
+find $dir -type f -print0 | xargs -0 chmod 644
+find $dir -name \*.sh -print0 | xargs -0 chmod 755
 
-chown root:root $DIR/permset.sh
-chown root:root $DIR/permset.conf
+chown root:root $dir/permset.sh
+chown -R apache:apache $dir/wp-content/cache
 
-chmod 664 $DIR/.htaccess
-chmod 640 $DIR/wp-db-config.php
+chmod 664 $dir/.htaccess
+chmod 640 $dir/wp-db-config.php
 
-find $DIR/wp-content -type d -print0 | xargs -0 chmod 02775
-find $DIR/wp-content -type f -print0 | xargs -0 chmod 664
-find $DIR/wp-content -name \*.sh -print0 | xargs -0 chmod 700
-
-restorecon -R $DIR
+find $dir/wp-content -type d -print0 | xargs -0 chmod 02775
+find $dir/wp-content -type f -print0 | xargs -0 chmod 664
+find $dir/wp-content -name \*.sh -print0 | xargs -0 chmod 700
