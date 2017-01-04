@@ -1,7 +1,4 @@
-wp-db-config.php
-wp-content/plugins/crayon-syntax-highlighter/log.txt
 .htaccess
-permset.conf
-wp-content/uploads
+wp-db-config.php
 wp-content/cache
-wp-content/wp-cache-config.php
+wp-content/uploads
