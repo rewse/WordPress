@@ -1,31 +1,59 @@
 <?php
 
-if ( !class_exists( 'Meow_Admin' ) ) {
+if ( !class_exists( 'MeowApps_Admin' ) ) {
 
-	class Meow_Admin {
+	class MeowApps_Admin {
 
 		public static $loaded = false;
-		public static $version = "0.2";
-		public $prefix = null;
-		public $item = null;
+		public static $admin_version = "1.2";
 
-		public function __construct( $prefix = null, $item = null ) {
-			if ( !Meow_Admin::$loaded ) {
+		public $prefix; 		// prefix used for actions, filters (mfrh)
+		public $mainfile; 	// plugin main file (media-file-renamer.php)
+		public $domain; 		// domain used for translation (media-file-renamer)
+
+		public function __construct( $prefix, $mainfile, $domain ) {
+
+			// Core Admin (used by all Meow Apps plugins)
+			if ( !MeowApps_Admin::$loaded ) {
 				if ( is_admin() ) {
 					add_action( 'admin_menu', array( $this, 'admin_menu_start' ) );
 					add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
 					add_action( 'plugins_loaded', array( $this, 'plugins_loaded' ) );
 				}
+				MeowApps_Admin::$loaded = true;
 			}
-			if ( !empty( $prefix ) && !empty( $item ) ) {
-				$this->prefix = $prefix;
-				$this->item = $item;
-				if ( is_admin() ) {
-					add_action( 'update_option_' . $prefix . '_pro_serial', array( $this, 'serial_updated' ), 10, 2 );
-					add_action( 'admin_menu', array( $this, 'admin_menu_for_serialkey' ) );
+
+			// Variables for this plugin
+			$this->prefix = $prefix;
+			$this->mainfile = $mainfile;
+			$this->domain = $domain;
+
+			// Check if the free version is installed but there is license
+			// TODO: In the future, this should be removed ideally
+			if ( is_admin() ) {
+				$license = get_option( $this->prefix . '_license', "" );
+				if ( ( !empty( $license ) ) && !file_exists( plugin_dir_path( __FILE__ ) . '/meowapps/admin.php' ) ) {
+					add_action( 'admin_notices', array( $this, 'admin_notices_licensed_free' ) );
 				}
 			}
-			Meow_Admin::$loaded = true;
+		}
+
+		function admin_notices_licensed_free() {
+			if ( isset( $_POST[$this->prefix . '_reset_sub'] ) ) {
+				delete_option( $this->prefix . '_pro_serial' );
+				delete_option( $this->prefix . '_license' );
+				return;
+			}
+			echo '<div class="error">';
+			echo '<p>It looks like you are using the free version of the plugin (<b>' . $this->mainfile . '</b>) but a license for the Pro version was also found. The Pro version might have been replaced by the Free version during an update (might be caused by a temporarily issue). If it is the case, <b>please download it again</b> from the <a target="_blank" href="https://store.meowapps.com">Meow Store</a>. If you wish to continue using the free version and clear this message, click on this button.';
+			echo '<p>
+				<form method="post" action="">
+					<input type="hidden" name="' . $this->prefix . '_reset_sub" value="true">
+					<input type="submit" name="submit" id="submit" class="button" value="Remove the license">
+				</form>
+			</p>
+			';
+			echo '</div>';
 		}
 
 		function display_ads() {
@@ -34,6 +62,8 @@ if ( !class_exists( 'Meow_Admin' ) ) {
 
 		function display_title( $title = "Meow Apps",
 			$author = "By <a style='text-decoration: none;' href='http://meowapps.com' target='_blank'>Jordy Meow</a>" ) {
+			if ( !empty( $this->prefix ) )
+				$title = apply_filters( $this->prefix . '_plugin_title', $title );
 			if ( $this->display_ads() ) {
 				echo '<a class="meow-header-ad" target="_blank" href="http://www.shareasale.com/r.cfm?b=906810&u=767054&m=41388&urllink=&afftrack="">
 				<img src="' . $this->common_url( 'img/wpengine.png' ) . '" height="60" border="0" /></a>';
@@ -49,8 +79,8 @@ if ( !class_exists( 'Meow_Admin' ) ) {
 		}
 
 		function admin_enqueue_scripts() {
-			wp_register_style( 'meowapps-admin-css', $this->common_url( 'meow-admin.css' ) );
-			wp_enqueue_style( 'meowapps-admin-css' );
+			wp_register_style( 'meowapps-core-css', $this->common_url( 'admin.css' ) );
+			wp_enqueue_style( 'meowapps-core-css' );
 		}
 
 		function admin_menu_start() {
@@ -97,128 +127,50 @@ if ( !class_exists( 'Meow_Admin' ) ) {
 	    echo $html;
 		}
 
-		function admin_menu_for_serialkey() {
-			// SUBMENU > Settings > Pro Serial
-			add_settings_section( $this->prefix . '_settings_serialkey', null, null, $this->prefix . '_settings_serialkey-menu' );
-			add_settings_field( $this->prefix . '_pro_serial', "Serial Key",
-				array( $this, 'admin_serialkey_callback' ),
-				$this->prefix . '_settings_serialkey-menu', $this->prefix . '_settings_serialkey' );
-			register_setting( $this->prefix . '_settings_serialkey', $this->prefix . '_pro_serial' );
-		}
-
-		function admin_serialkey_callback( $args ) {
-	    $value = get_option( $this->prefix . '_pro_serial', null );
-	    $html = '<input type="text" id="' . $this->prefix . '_pro_serial" name="' . $this->prefix . '_pro_serial" value="' . $value . '" />';
-	    echo $html;
-	  }
-
 		function display_serialkey_box( $url = "https://meowapps.com/" ) {
-			$status = get_option( $this->prefix . '_pro_status' );
-			?>
-			<div class="meow-box">
-				<h3 class="<?php echo $this->is_pro() ? 'meow-bk-blue' : 'meow-bk-red'; ?>">Pro Version <?php echo $this->is_pro() ? '(enabled)' : '(disabled)'; ?></h3>
-				<div class="inside">
-					<form method="post" action="options.php">
-						<?php if ( !empty( $status ) ): ?>
-						<div class="pro_info <?php echo $this->is_pro() ? 'enabled' : 'disabled'; ?>">
-							<?php echo get_option( $this->prefix . '_pro_status' ); ?>
-						</div>
-						<?php endif; ?>
-						<?php settings_fields( $this->prefix . '_settings_serialkey' ); ?>
-						<?php do_settings_sections( $this->prefix . '_settings_serialkey-menu' ); ?>
-						<?php if ( !$this->is_pro() ): ?>
-							<small class="description">Insert your serial key above. If you don't have one yet, you can get one <a target="_blank" href="<?php echo $url; ?>">here.</a></small>
-						<?php endif; ?>
-						<?php submit_button(); ?>
-					</form>
-				</div>
-			</div>
-			<?php
+			$html = '<div class="meow-box">';
+      $html .= '<h3 class="' . ( $this->is_registered( $this->prefix ) ? 'meow-bk-blue' : 'meow-bk-red' ) . '">Pro Version ' .
+        ( $this->is_registered( $this->prefix ) ? '(enabled)' : '(disabled)' ) . '</h3>';
+      $html .= '<div class="inside">';
+			echo $html;
+			$html = apply_filters( $this->prefix . '_meowapps_license_input', ( 'More information about the Pro version here:
+				<a target="_blank" href="' . $url . '">' . $url . '</a>.' ), $url );
+      $html .= '</div>';
+      $html .= '</div>';
+			echo $html;
 		}
 
-		function serial_updated( $old_value, $new_value ) {
-			if ( $old_value != $new_value ) {
-				$this->validate_pro( $new_value );
-			}
-		}
-
-		function is_pro() {
-			$prefix = $this->prefix;
-			$validated = get_transient( $prefix . '_validated' );
-			$subscr_id = get_option( $prefix . '_pro_serial', "" );
-			if ( $validated )
-				return !empty( $subscr_id );
-			if ( !empty( $subscr_id ) )
-				return $this->validate_pro( $subscr_id );
-			return false;
-		}
-
-		function validate_pro( $subscr_id ) {
-			$prefix = $this->prefix;
-			$item = $this->item;
-			delete_option( $prefix . '_pro_serial', "" );
-			update_option( $prefix . '_pro_status', __( '', 'meowapps' ) );
-			set_transient( $prefix . '_validated', false, 0 );
-			if ( empty( $subscr_id ) )
-				return false;
-			$bodyreq = array( 'subscr_id' => $subscr_id, 'item' => $item, 'url' => get_site_url() );
-			$response = wp_remote_post( 'https://meowapps.com/wp-json/meow/v1/auth', array(
-				'body' => $bodyreq,
-				'user-agent' => "MeowApps",
-				'sslverify' => false,
-				'timeout' => 45,
-				'method' => 'POST'
-			));
-			$body = is_array( $response ) ? $response['body'] : null;
-			$post = @json_decode( $body );
-			if ( !$post || ( property_exists( $post, 'code' ) ) ) {
-				$status = __( "There was an error while validating the serial.<br />Please contact <a target='_blank' href='https://meowapps.com/contact/'>Meow Apps</a> and mention the following log: <br /><ul>" );
-				$status .= "<li>Server IP: <b>" . gethostbyname( $_SERVER['SERVER_NAME'] ) . "</b></li>";
-				$status .= "<li>Google GET: ";
-				$r = wp_remote_get( 'http://google.com' );
-				$status .= is_wp_error( $r ) ? print_r( $r, true ) : 'OK';
-				$status .= "</li><li>MeowApps GET: ";
-				$r = wp_remote_get( 'http://google.com' );
-				$status .= is_wp_error( $r ) ? print_r( $r, true ) : 'OK';
-				$status .= "</li><li>MeowApps POST: ";
-				$status .= print_r( $response, true );
-				$status .= "</li></ul>";
-				error_log( print_r( $response, true ) );
-				update_option( $prefix . '_pro_status', $status );
-				return false;
-			}
-			if ( !$post->success ) {
-				if ( $post->message_code == "NO_SUBSCRIPTION" )
-					$status = __( "Your serial ('$subscr_id') does not seem right." );
-				else if ( $post->message_code == "NOT_ACTIVE" )
-					$status = __( "Your subscription is not active." );
-				else if ( $post->message_code == "TOO_MANY_URLS" )
-					$status = __( "Too many URLs are linked to your subscription." );
-				else
-					$status = "There is a problem with your subscription.";
-				update_option( $prefix . '_pro_status', $status );
-				return false;
-			}
-			set_transient( $prefix . '_validated', $subscr_id, 3600 * 24 * 100 );
-			update_option( $prefix . '_pro_serial', $subscr_id );
-			update_option( $prefix . '_pro_status', __( '', 'meowapps' ) );
-			return true;
+		function is_registered() {
+			return apply_filters( $this->prefix . '_meowapps_is_registered', false, $this->prefix  );
 		}
 
 		function check_install( $plugin ) {
-			$pluginpath = get_home_path() . 'wp-content/plugins/' . $plugin;
+			$pro = false;
+			$pluginpath = get_home_path() . 'wp-content/plugins/' . $plugin . '-pro';
 			if ( !file_exists( $pluginpath ) ) {
-				$url = wp_nonce_url( "update.php?action=install-plugin&plugin=$plugin", "install-plugin_$plugin" );
-				return "<a href='$url'><small><span class='' style='float: right;'>install</span></small></a>";
+				$pluginpath = get_home_path() . 'wp-content/plugins/' . $plugin;
+				if ( !file_exists( $pluginpath ) ) {
+					$url = wp_nonce_url( "update.php?action=install-plugin&plugin=$plugin", "install-plugin_$plugin" );
+					return "<a href='$url'><small><span class='' style='float: right;'>install</span></small></a>";
+				}
 			}
+			else {
+				$pro = true;
+				$plugin = $plugin . "-pro";
+			}
+
 			$plugin_file = $plugin . '/' . $plugin . '.php';
-			if ( is_plugin_active( $plugin_file ) )
-				return "<small><span style='float: right; color: green;'><span class='dashicons dashicons-yes'></span></span></small>";
+			if ( is_plugin_active( $plugin_file ) ) {
+				if ( $pro )
+					return "<small><span style='float: right;'><span class='dashicons dashicons-heart' style='color: rgba(255, 63, 0, 1); font-size: 30px !important; margin-right: 10px;'></span></span></small>";
+				else
+					return "<small><span style='float: right;'><span class='dashicons dashicons-yes' style='color: #00b4ff; font-size: 30px !important; margin-right: 10px;'></span></span></small>";
+			}
 			else {
 				$url = wp_nonce_url( self_admin_url( 'plugins.php?action=activate&plugin=' . $plugin_file ),
 					'activate-plugin_' . $plugin_file );
-				return '<small><span style="color: orange; float: right;">off
-				(<a style="color: rgba(30,140,190,.8); text-decoration: none;" href="' .
+				return '<small><span style="color: black; float: right;">off
+				(<a style="color: rgba(30,140,190,1); text-decoration: none;" href="' .
 					$url . '">enable</a>)</span></small>';
 			}
 		}
@@ -255,15 +207,20 @@ if ( !class_exists( 'Meow_Admin' ) ) {
 				echo "</div>";
 			}
 			else if ( isset( $_GET['tool'] ) && $_GET['tool'] == 'error_log' ) {
+				$errorpath = ini_get( 'error_log' );
 				echo "<a href=\"javascript:history.go(-1)\">< Go back</a><br /><br />";
 				echo '<div id="error_log">';
-				echo "Now (auto-reload every 5 seconds):<br />[" . date( "d-M-Y H:i:s", time() ) . " UTC]<br /<br /><br />Errors (order by latest):";
-				$errorpath = ini_get( 'error_log' );
-				$errors = file_get_contents( $errorpath );
-				$errors = explode( "\n", $errors );
-				$errors = array_reverse( $errors );
-				$errors = implode( "<br />", $errors );
-				echo $errors;
+				if ( file_exists( $errorpath ) ) {
+					echo "Now (auto-reload every 5 seconds):<br />[" . date( "d-M-Y H:i:s", time() ) . " UTC]<br /<br /><br />Errors (order by latest):";
+					$errors = file_get_contents( $errorpath );
+					$errors = explode( "\n", $errors );
+					$errors = array_reverse( $errors );
+					$errors = implode( "<br />", $errors );
+					echo $errors;
+				}
+				else {
+					echo "The PHP Error Logs cannot be found. Please ask your hosting service for it.";
+				}
 				echo "</div>";
 
 			}
@@ -272,7 +229,7 @@ if ( !class_exists( 'Meow_Admin' ) ) {
 				?>
 				<?php $this->display_title(); ?>
 				<p>
-				<?php _e( 'Meow Apps is run by <a href="http://jordymeow.com">Jordy Meow</a>, a photographer and software developer based in Japan. When he realized that WordPress was an environment not so friendly to photographers, Meow Apps was born. It is a suite of plugins dedicate to make the blogging life of image lovers easy and pretty. Meow Apps also teams up with the best players in the community (other themes or plugins developers). For more information, please check <a href="http://meowapps.com" target="_blank">Meow Apps</a>.', 'meowapps' )
+				<?php _e( 'Meow Apps is run by Jordy Meow, a photographer and software developer living in Japan (and taking <a target="_blank" href="http://offbeatjapan.org">a lot of photos</a>). Meow Apps is a suite of plugins focusing on photography, imaging, optimization and it teams up with the best players in the community (other themes and plugins developers). For more information, please check <a href="http://meowapps.com" target="_blank">Meow Apps</a>.', 'meowapps' )
 				?>
 				</p>
 				<div class="meow-row">
@@ -295,9 +252,9 @@ if ( !class_exists( 'Meow_Admin' ) ) {
 							<li><b>Media File Renamer</b> <?php echo $this->check_install( 'media-file-renamer' ) ?><br />
 								Nicer filenames and better SEO, automatically.</li>
 							<li><b>Media Cleaner</b> <?php echo $this->check_install( 'media-cleaner' ) ?><br />
-								Detect the files you are not using to clean your system.</li>
+								Detect the files which are not in use.</li>
 							<li><b>WP Retina 2x</b> <?php echo $this->check_install( 'wp-retina-2x' ) ?><br />
-								Make your website perfect for retina devices.</li>
+								The famous plugin that adds Retina support.</li>
 							<li><b>WP Category Permalink</b> <?php echo $this->check_install( 'wp-category-permalink' ) ?><br />
 								Allows you to select a main category (or taxonomy) for nicer permalinks.</li>
 						</ul>
@@ -331,7 +288,7 @@ if ( !class_exists( 'Meow_Admin' ) ) {
 
 			}
 
-			echo "<br /><small style='color: lightgray;'>Meow Admin " . Meow_Admin::$version . "</small></div>";
+			echo "<br /><small style='color: lightgray;'>Meow Admin " . MeowApps_Admin::$admin_version . "</small></div>";
 		}
 
 		// HELPERS
@@ -346,6 +303,10 @@ if ( !class_exists( 'Meow_Admin' ) ) {
 
 	}
 
+}
+
+if ( file_exists( plugin_dir_path( __FILE__ ) . '/meowapps/admin.php' ) ) {
+	require( 'meowapps/admin.php' );
 }
 
 ?>
