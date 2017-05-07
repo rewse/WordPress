@@ -17,7 +17,7 @@ function jetpack_top_posts_widget_init() {
 	if (
 		( ! defined( 'IS_WPCOM' ) || ! IS_WPCOM )
 	&&
-		! function_exists( 'stats_get_csv' )
+		! function_exists( 'stats_get_from_restapi' )
 	) {
 		return;
 	}
@@ -250,11 +250,12 @@ class Jetpack_Top_Posts_Widget extends WP_Widget {
 				'fallback_to_avatars' => true,
 				/** This filter is documented in modules/stats.php */
 				'gravatar_default' => apply_filters( 'jetpack_static_url', set_url_scheme( 'https://en.wordpress.com/i/logo/white-gray-80.png' ) ),
+				'avatar_size' => 40,
+				'width' => null,
+				'height' => null,
 			);
 			if ( 'grid' == $display ) {
 				$get_image_options['avatar_size'] = 200;
-			} else {
-				$get_image_options['avatar_size'] = 40;
 			}
 			/**
 			 * Top Posts Widget Image options.
@@ -268,6 +269,8 @@ class Jetpack_Top_Posts_Widget extends WP_Widget {
 			 * @type bool true Should we default to Gravatars when no image is found? Default is true.
 			 * @type string $gravatar_default Default Image URL if no Gravatar is found.
 			 * @type int $avatar_size Default Image size.
+			 * @type mixed $width Image width, not set by default and $avatar_size is used instead.
+			 * @type mixed $height Image height, not set by default and $avatar_size is used instead.
 			 * }
 			 */
 			$get_image_options = apply_filters( 'jetpack_top_posts_widget_image_options', $get_image_options );
@@ -311,19 +314,37 @@ class Jetpack_Top_Posts_Widget extends WP_Widget {
 		switch ( $display ) {
 		case 'list' :
 		case 'grid' :
+			// Keep the avatar_size as default dimensions for backward compatibility.
+			$width  = (int) $get_image_options['avatar_size'];
+			$height = (int) $get_image_options['avatar_size'];
+
+			// Check if the user has changed the width.
+			if ( ! empty( $get_image_options['width'] ) ) {
+				$width  = (int) $get_image_options['width'];
+			}
+
+			// Check if the user has changed the height.
+			if ( ! empty( $get_image_options['height'] ) ) {
+				$height = (int) $get_image_options['height'];
+			}
+
+			foreach ( $posts as &$post ) {
+				$image = Jetpack_PostImages::get_image(
+					$post['post_id'],
+					array(
+						'fallback_to_avatars' => true,
+						'avatar_size'         => (int) $get_image_options['avatar_size'],
+					)
+				);
+				$post['image'] = $image['src'];
+				if ( 'blavatar' != $image['from'] && 'gravatar' != $image['from'] ) {
+					$post['image'] = jetpack_photon_url( $post['image'], array( 'resize' => "$width,$height" ) );
+				}
+			}
+
+			unset( $post );
+
 			if ( 'grid' == $display ) {
-        wp_enqueue_style( 'widget-grid-and-list' );
-        foreach ( $posts as &$post ) {
-          $image = Jetpack_PostImages::get_image( $post['post_id'], array( 'fallback_to_avatars' => true ) );
-          $post['image'] = $image['src'];
-          if ( 'blavatar' != $image['from'] && 'gravatar' != $image['from'] ) {
-            $size = (int) $get_image_options['avatar_size'];
-            $post['image'] = jetpack_photon_url( $post['image'], array( 'resize' => "$size,$size" ) );
-          }
-        }
-
-        unset( $post );
-
 				echo "<div class='widgets-grid-layout no-grav'>\n";
 				foreach ( $posts as $post ) :
 				?>
@@ -354,8 +375,7 @@ class Jetpack_Top_Posts_Widget extends WP_Widget {
 
 						?>
 						<a href="<?php echo esc_url( $filtered_permalink ); ?>" title="<?php echo esc_attr( wp_kses( $post['title'], array() ) ); ?>" class="bump-view" data-bump-view="tp">
-							<?php $size = (int) $get_image_options['avatar_size']; ?>
-							<img width="<?php echo absint( $size ); ?>" height="<?php echo absint( $size ); ?>" src="<?php echo esc_url( $post['image'] ); ?>" alt="<?php echo esc_attr( wp_kses( $post['title'], array() ) ); ?>" data-pin-nopin="true" />
+							<img width="<?php echo absint( $width ); ?>" height="<?php echo absint( $height ); ?>" src="<?php echo esc_url( $post['image'] ); ?>" alt="<?php echo esc_attr( wp_kses( $post['title'], array() ) ); ?>" data-pin-nopin="true" />
 						</a>
 						<?php
 						/**
@@ -374,73 +394,33 @@ class Jetpack_Top_Posts_Widget extends WP_Widget {
 				endforeach;
 				echo "</div>\n";
 			} else {
-        echo "<ol>\n";
-        foreach ( $posts as $post ) :
-          $top_posts = new WP_Query( 'p=' . $post['post_id'] );
+				echo "<ul class='widgets-list-layout no-grav'>\n";
+				foreach ( $posts as $post ) :
+				?>
+					<li>
+						<?php
+						/** This action is documented in modules/widgets/top-posts.php */
+						do_action( 'jetpack_widget_top_posts_before_post', $post['post_id'] );
 
-          if ( $top_posts->have_posts() ) : while ( $top_posts->have_posts() ) : $top_posts->the_post();
-            $images = array();
-
-            $images = get_posts( array(
-              'fields'         => 'ids',
-              'numberposts'    => -1,
-              'order'          => 'ASC',
-              'orderby'        => 'menu_order',
-              'post_mime_type' => 'image',
-              'post_parent'    => get_the_ID(),
-              'post_type'      => 'attachment',
-            ) );
-
-            $total_images = count( $images );
-
-            if ( has_post_thumbnail() ) :
-              $post_thumbnail = get_the_post_thumbnail();
-            elseif ( $total_images > 0 ) :
-              $image          = array_shift( $images );
-              $post_thumbnail = wp_get_attachment_image( $image, 'post-thumbnail' );
-            else :
-              unset( $post_thumbnail );
-            endif;
-        ?>
-          <li>
-          <article <?php post_class(); ?>>
-          <div class="entry-content">
-          <?php if ( ! empty ( $post_thumbnail ) ) : ?>
-            <p><a href="<?php echo get_permalink(); ?>"><?php echo $post_thumbnail; ?></a></p>
-          <?php
-            endif;
-
-            the_excerpt();
-          ?>
-            </div><!-- .entry-content -->
-
-            <header class="entry-header">
-            <div class="entry-meta">
-            <?php
-              if ( ! has_post_format( 'link' ) && ! has_post_format( 'aside' )) :
-                the_title( '<h1 class="entry-title"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></h1>' );
-              endif;
-
-              printf( '<span class="entry-date"><a href="%1$s" rel="bookmark"><time class="entry-date" datetime="%2$s">%3$s</time></a></span> <span class="byline"><span class="author vcard"><a clss="url fn n" href="%4$s" rel="author">%5$s</a></span></span>',
-                esc_url( get_permalink() ),
-                esc_attr( get_the_date( 'c' ) ),
-                esc_html( get_the_date() ),
-                esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ),
-                get_the_author()
-              );
-
-              if ( ! post_password_required() && ( comments_open() || get_comments_number() ) ) :
-            ?>
-            <span class="comments-link"><?php comments_popup_link( __( 'Leave a comment', 'twentyfourteen' ), __( '1 Comment', 'twnetyfourteen' ), __( '% Comments', 'twentyfourteen' ) ); ?></span>
-            </div><!-- .entry-meta -->
-            </header><!-- .entry-header -->
-          </article><!-- #post-## -->
-          </li>
-        <?php
-              endif;
-          endwhile; endif;
+						/** This filter is documented in modules/widgets/top-posts.php */
+						$filtered_permalink = apply_filters( 'jetpack_top_posts_widget_permalink', $post['permalink'], $post );
+						?>
+						<a href="<?php echo esc_url( $filtered_permalink ); ?>" title="<?php echo esc_attr( wp_kses( $post['title'], array() ) ); ?>" class="bump-view" data-bump-view="tp">
+							<img width="<?php echo absint( $width ); ?>" height="<?php echo absint( $height ); ?>" src="<?php echo esc_url( $post['image'] ); ?>" class='widgets-list-layout-blavatar' alt="<?php echo esc_attr( wp_kses( $post['title'], array() ) ); ?>" data-pin-nopin="true" />
+						</a>
+						<div class="widgets-list-layout-links">
+							<a href="<?php echo esc_url( $filtered_permalink ); ?>" class="bump-view" data-bump-view="tp">
+								<?php echo esc_html( wp_kses( $post['title'], array() ) ); ?>
+							</a>
+						</div>
+						<?php
+						/** This action is documented in modules/widgets/top-posts.php */
+						do_action( 'jetpack_widget_top_posts_after_post', $post['post_id'] );
+						?>
+					</li>
+				<?php
 				endforeach;
-        echo "</ol>\n";
+				echo "</ul>\n";
 			}
 			break;
 		default :
@@ -529,12 +509,14 @@ class Jetpack_Top_Posts_Widget extends WP_Widget {
 			$days = 2;
 		}
 
-		$post_view_posts = stats_get_csv( 'postviews', array( 'days' => absint( $days ), 'limit' => 11 ) );
-		if ( ! $post_view_posts ) {
+		$post_view_posts = stats_get_from_restapi( array(), 'top-posts?max=11&summarize=1&num=' . absint( $days ) );
+
+		if ( ! isset( $post_view_posts->summary ) || empty( $post_view_posts->summary->postviews ) ) {
 			return array();
 		}
 
-		$post_view_ids = array_filter( wp_list_pluck( $post_view_posts, 'post_id' ) );
+		$post_view_ids = array_filter( wp_list_pluck( $post_view_posts->summary->postviews, 'id' ) );
+
 		if ( ! $post_view_ids ) {
 			return array();
 		}
