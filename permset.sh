@@ -15,7 +15,7 @@ RewriteRule . /blog/index.php [L]
 # END WordPress
 !
 
-chown -R tats:apache $dir
+chown -R tats:www-data $dir
 
 chmod 02775 $dir
 find $dir -type d -print0 | xargs -0 chmod 02755
@@ -23,7 +23,7 @@ find $dir -type f -print0 | xargs -0 chmod 644
 find $dir -name \*.sh -print0 | xargs -0 chmod 755
 
 chown root:root $dir/permset.sh
-chown -R apache:apache $dir/wp-content/cache
+chown -R www-data:www-data $dir/wp-content/cache
 
 chmod 664 $dir/.htaccess
 chmod 640 $dir/wp-db-config.php
